@@ -4,4 +4,5 @@ public class Test {
     }
 
     String dieserLukas = "gurt";
+    String[] patricksAussagen = {"das crazy", "da war so nen viech im wasser"};
 }
