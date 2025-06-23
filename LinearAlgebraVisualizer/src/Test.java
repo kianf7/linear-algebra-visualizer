@@ -1,4 +1,5 @@
 public class Test {
-    int lukas = 0;
-    int kian = 235;
+    public static void main(String[] args) {
+        System.out.println("Hallo Welt");
+    }
 }
