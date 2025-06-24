@@ -1,40 +1,44 @@
 import java.awt.*;
 
 public class CoordinateGrid implements Drawable{
-    private final int gridSpacing;
-    private final int windowWidth;
-    private final int windowHeight;
+    private int scale;
 
 
-    public CoordinateGrid(int scale, int windowWidth, int windowHeight) {
-        gridSpacing = scale;
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
+    public CoordinateGrid(int scale) {
+        this.scale = scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getScale() {
+        return scale;
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        drawGrid(g);
-        drawOrigin(g);
+    public void draw(Graphics2D g, int windowWidth, int windowHeight) {
+        drawGrid(g, windowWidth, windowHeight);
+        drawOrigin(g, windowWidth, windowHeight);
     }
 
-    public void drawGrid(Graphics2D g) {
+    public void drawGrid(Graphics2D g, int windowWidth, int windowHeight) {
         g.setColor(Color.gray);
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
-        int startX = originX % gridSpacing;
-        int startY = originY % gridSpacing;
+        int startX = originX % scale;
+        int startY = originY % scale;
 
-        for (int gridX = startX; gridX <= windowWidth; gridX += gridSpacing) {
+        for (int gridX = startX; gridX <= windowWidth; gridX += scale) {
             g.drawLine(gridX, 0, gridX, windowHeight);
         }
 
-        for (int gridY = startY; gridY <= windowHeight; gridY += gridSpacing) {
+        for (int gridY = startY; gridY <= windowHeight; gridY += scale) {
             g.drawLine(0, gridY, windowWidth, gridY);
         }
     }
 
-    public void drawOrigin(Graphics2D g) {
+    public void drawOrigin(Graphics2D g, int windowWidth, int windowHeight) {
         g.setColor(Color.white);
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;

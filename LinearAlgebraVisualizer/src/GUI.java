@@ -14,8 +14,8 @@ public class GUI extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         //TODO add everything that should be drawn
-        CoordinateGrid gridTest = new CoordinateGrid(scale, getWidth(), getHeight());
-        gridTest.draw(g2d);
+        CoordinateGrid gridTest = new CoordinateGrid(scale);
+        gridTest.draw(g2d, getWidth(), getHeight());
 
     }
 
