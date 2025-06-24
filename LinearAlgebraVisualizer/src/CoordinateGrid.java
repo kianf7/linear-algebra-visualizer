@@ -25,12 +25,12 @@ public class CoordinateGrid implements Drawable{
         int startX = originX % gridSpacing;
         int startY = originY % gridSpacing;
 
-        for (int x = startX; x <= windowWidth; x += gridSpacing) {
-            g.drawLine(x, 0, x, windowHeight);
+        for (int gridX = startX; gridX <= windowWidth; gridX += gridSpacing) {
+            g.drawLine(gridX, 0, gridX, windowHeight);
         }
 
-        for (int y = startY; y <= windowHeight; y += gridSpacing) {
-            g.drawLine(0, y, windowWidth, y);
+        for (int gridY = startY; gridY <= windowHeight; gridY += gridSpacing) {
+            g.drawLine(0, gridY, windowWidth, gridY);
         }
     }
 
