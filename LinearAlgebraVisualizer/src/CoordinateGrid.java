@@ -20,12 +20,16 @@ public class CoordinateGrid implements Drawable{
 
     public void drawGrid(Graphics2D g) {
         g.setColor(Color.gray);
+        int originX = windowWidth / 2;
+        int originY = windowHeight / 2;
+        int startX = originX % gridSpacing;
+        int startY = originY % gridSpacing;
 
-        for (int x = 0; x <= windowWidth; x+= gridSpacing) {
+        for (int x = startX; x <= windowWidth; x += gridSpacing) {
             g.drawLine(x, 0, x, windowHeight);
         }
 
-        for (int y = 0; y <= windowHeight; y+= gridSpacing) {
+        for (int y = startY; y <= windowHeight; y += gridSpacing) {
             g.drawLine(0, y, windowWidth, y);
         }
     }

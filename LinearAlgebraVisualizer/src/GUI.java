@@ -23,8 +23,6 @@ public class GUI extends JPanel {
         JFrame frame = new JFrame("Linear Algebra Visualizer");
         GUI testGui = new GUI(35);
         frame.add(testGui);
-
-
         frame.setSize(800,600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
