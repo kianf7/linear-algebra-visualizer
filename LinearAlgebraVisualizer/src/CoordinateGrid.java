@@ -1,28 +1,17 @@
 import java.awt.*;
 
 public class CoordinateGrid implements Drawable{
-    private int scale;
 
-
-    public CoordinateGrid(int scale) {
-        this.scale = scale;
-    }
-
-    public void setScale(int scale) {
-        this.scale = scale;
-    }
-
-    public int getScale() {
-        return scale;
+    public CoordinateGrid() {
     }
 
     @Override
-    public void draw(Graphics2D g, int windowWidth, int windowHeight) {
-        drawGrid(g, windowWidth, windowHeight);
+    public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
+        drawGrid(g, windowWidth, windowHeight, scale);
         drawOrigin(g, windowWidth, windowHeight);
     }
 
-    public void drawGrid(Graphics2D g, int windowWidth, int windowHeight) {
+    public void drawGrid(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         g.setColor(Color.gray);
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;

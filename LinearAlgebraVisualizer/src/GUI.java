@@ -9,13 +9,20 @@ public class GUI extends JPanel {
         this.scale = scale;
     }
 
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+    public int getScale() {
+        return scale;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         //TODO add everything that should be drawn
-        CoordinateGrid gridTest = new CoordinateGrid(scale);
-        gridTest.draw(g2d, getWidth(), getHeight());
+        CoordinateGrid gridTest = new CoordinateGrid();
+        gridTest.draw(g2d, getWidth(), getHeight(), scale);
 
     }
 
