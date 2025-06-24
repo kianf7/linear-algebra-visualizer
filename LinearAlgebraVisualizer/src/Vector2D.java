@@ -1,4 +1,6 @@
-public class Vector2D {
+import java.awt.*;
+
+public class Vector2D implements Drawable{
     private double x;
     private double y;
 
@@ -16,5 +18,9 @@ public class Vector2D {
     public double getX() {return x;}
     public double getY() {return y;}
 
+    @Override
+    public void draw(Graphics2D g) {
+        // TODO: FILL
+    }
 
 }
