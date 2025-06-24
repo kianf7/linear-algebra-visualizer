@@ -23,6 +23,12 @@ public class Matrix2D {
         return d;
     }
 
+    public void setA(double a) { this.a = a;}
+    public void setB(double b) { this.b = b;}
+    public void setC(double c) { this.c = c;}
+    public void setD(double d) { this.d = d;}
+
+
     public Vector2D transformVector(Vector2D v) {
         double transformedX = a * v.getX() + b * v.getY();
         double transformedY = c * v.getX() + d * v.getY();
