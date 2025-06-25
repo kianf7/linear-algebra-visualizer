@@ -8,6 +8,10 @@ public class DrawableVector extends Vector2D implements Drawable {
         this.color = color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         int originX = windowWidth / 2;
