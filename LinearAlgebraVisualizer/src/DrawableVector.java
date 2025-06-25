@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class DrawableVector extends Vector2D implements Drawable {
     private Color color;
@@ -22,6 +23,35 @@ public class DrawableVector extends Vector2D implements Drawable {
         g.setStroke(new BasicStroke(3));
         g.drawLine(originX, originY, endX, endY);
     }
+
+    private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
+        g.setColor(color);
+        g.setStroke(new BasicStroke(2.5F));
+        g.drawLine(x1, y1, x2, y2);
+    }
+    public static void drawArrowhead(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
+        int arrowLength = 12;
+        int arrowWidth = 8;
+
+        Polygon arrowhead = new Polygon();
+        arrowhead.addPoint(0,0);
+        arrowhead.addPoint(-arrowWidth / 2, -arrowLength);
+        arrowhead.addPoint(arrowWidth / 2, -arrowLength);
+
+        double angle = Math.atan2(y2-y1, x2-x1);
+
+        AffineTransform tx = new AffineTransform();
+        tx.translate(x2,y2);
+        tx.rotate(angle);
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.translate(x2,y2);
+        g2d.rotate(angle - Math.PI/2);
+        g2d.setColor(color);
+        g2d.fill(arrowhead);
+        g2d.dispose();
+    }
+
     public static void drawVectorSum(Graphics2D g, DrawableVector v1, DrawableVector v2, int windowWidth, int windowHeight, int scale) {
 
         // draw v1 starting from origin
@@ -31,24 +61,18 @@ public class DrawableVector extends Vector2D implements Drawable {
         int endX_v1 = (int) (originX_v1 + scale * v1.getX());
         int endY_v1 = (int) (originY_v1 - scale * v1.getY());
 
-        g.setColor(v1.color);
-        g.setStroke(new BasicStroke(2.5F));
-        g.drawLine(originX_v1, originY_v1, endX_v1, endY_v1);
+        drawLine(g, originX_v1, originY_v1, endX_v1, endY_v1, v1.color);
+        drawArrowhead(g, originX_v1, originY_v1, endX_v1, endY_v1, v1.color);
 
         // set v2 origin based on ending point of v1
-
         int endX_v2 = (int) (endX_v1 + scale * v2.getX());
         int endY_v2 = (int) (endY_v1 - scale * v2.getY());
 
-        g.setColor(v2.color);
-        g.setStroke(new BasicStroke(2.5F));
-        g.drawLine(endX_v1, endY_v1, endX_v2, endY_v2);
+        drawLine(g, endX_v1, endY_v1, endX_v2, endY_v2, v2.color);
+        drawArrowhead(g, endX_v1, endY_v1, endX_v2, endY_v2, v2.color);
 
         // draws sum of v1, v2
-        g.setColor(Color.blue);
-        g.setStroke(new BasicStroke(2.5F));
-        g.drawLine(originX_v1, originY_v1, endX_v2, endY_v2);
+        drawLine(g, originX_v1, originY_v1, endX_v2, endY_v2, Color.BLUE);
+        drawArrowhead(g, originX_v1, originY_v1, endX_v2, endY_v2, Color.BLUE);
     }
-
-
 }
