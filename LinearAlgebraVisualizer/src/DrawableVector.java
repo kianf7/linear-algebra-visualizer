@@ -28,7 +28,7 @@ public class DrawableVector extends Vector2D implements Drawable {
         int endY_v1 = (int) (originY_v1 - scale * v1.getY());
 
         g.setColor(v1.color);
-        g.setStroke(new BasicStroke(3));
+        g.setStroke(new BasicStroke(2.5F));
         g.drawLine(originX_v1, originY_v1, endX_v1, endY_v1);
 
         // set v2 origin based on ending point of v1
@@ -37,10 +37,13 @@ public class DrawableVector extends Vector2D implements Drawable {
         int endY_v2 = (int) (endY_v1 - scale * v2.getY());
 
         g.setColor(v2.color);
-        g.setStroke(new BasicStroke(3));
+        g.setStroke(new BasicStroke(2.5F));
         g.drawLine(endX_v1, endY_v1, endX_v2, endY_v2);
 
-
+        // draws sum of v1, v2
+        g.setColor(Color.blue);
+        g.setStroke(new BasicStroke(2.5F));
+        g.drawLine(originX_v1, originY_v1, endX_v2, endY_v2);
     }
 
 
