@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIController {
+    //TODO: add objects for all elements that have a listener
     private final GUI gui;
     private final JButton showVectorButton;
     private final JTextField vectorXField;
     private final JTextField vectorYField;
-    private VectorManager vectorManager;
+    private final VectorManager vectorManager;
 
     public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField) {
         this.gui = gui;

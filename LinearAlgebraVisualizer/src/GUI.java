@@ -38,7 +38,7 @@ public class GUI extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Linear Algebra Visualizer");
-        GUI testGui = new GUI(60);
+        GUI testGui = new GUI(35);
 
         JTextField vectorXField = new JTextField(5);
         JTextField vectorYField = new JTextField(5);
