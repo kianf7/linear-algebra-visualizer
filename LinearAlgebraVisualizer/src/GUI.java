@@ -23,6 +23,8 @@ public class GUI extends JPanel {
         //TODO add everything that should be drawn
         CoordinateGrid gridTest = new CoordinateGrid();
         gridTest.draw(g2d, getWidth(), getHeight(), scale);
+        DrawableVector test = new DrawableVector(1.5,0, Color.yellow);
+        test.draw(g2d, getWidth(), getHeight(), scale);
 
     }
 
