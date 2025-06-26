@@ -50,12 +50,18 @@ public class GUI extends JPanel {
         JFrame frame = new JFrame("Linear Algebra Visualizer");
         GUI testGui = new GUI(35);
 
-        JTextField vectorXField = new JTextField(5);
-        JTextField vectorYField = new JTextField(5);
+        JTextField vectorXField = new JTextField(3);
+        JTextField vectorYField = new JTextField(3);
         JButton showVectorButton = new JButton("Add vector");
         JButton vectorColorButton = new JButton("Choose color");
         JLabel labelX = new JLabel("x:");
         JLabel labelY = new JLabel("y:");
+        JLabel colorLabel = new JLabel("Current Color:");
+        JPanel colorPreview = new JPanel();
+        colorPreview.setPreferredSize(new Dimension(20, 20));
+        colorPreview.setBackground(Color.WHITE);
+        colorPreview.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(labelX);
@@ -64,8 +70,11 @@ public class GUI extends JPanel {
         inputPanel.add(vectorYField);
         inputPanel.add(showVectorButton);
         inputPanel.add(vectorColorButton);
+        inputPanel.add(colorLabel);
+        inputPanel.add(colorLabel);
+        inputPanel.add(colorPreview);
 
-        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorColorButton);
+        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorColorButton, colorPreview);
         frame.setLayout(new BorderLayout());
         frame.add(testGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);

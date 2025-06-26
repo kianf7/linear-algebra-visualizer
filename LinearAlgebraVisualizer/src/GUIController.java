@@ -9,13 +9,15 @@ public class GUIController {
     private final JTextField vectorYField;
     private final VectorManager vectorManager;
     private final JButton vectorColorButton;
+    private final JPanel colorPreview;
 
-    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton) {
+    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton, JPanel colorPreview) {
         this.gui = gui;
         this.showVectorButton = showVectorButton;
         this.vectorXField = vectorXField;
         this.vectorYField = vectorYField;
         this.vectorColorButton = vectorColorButton;
+        this.colorPreview = colorPreview;
 
         this.vectorManager = new VectorManager(gui);
         initializeListeners();
@@ -43,6 +45,7 @@ public class GUIController {
         vectorColorButton.addActionListener(e -> {
             Color chosen = JColorChooser.showDialog(gui, "Choose color", Color.white);
             if (chosen != null) {
+                colorPreview.setBackground(chosen);
                 vectorManager.setCurrentColor(chosen);
             }
 
