@@ -30,8 +30,8 @@ public class DrawableVector extends Vector2D implements Drawable {
         g.drawLine(x1, y1, x2, y2);
     }
     public static void drawArrowhead(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
-        int arrowLength = 12;
-        int arrowWidth = 8;
+        int arrowLength = 18;
+        int arrowWidth = 12;
 
         Polygon arrowhead = new Polygon();
         arrowhead.addPoint(0,0);
