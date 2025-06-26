@@ -11,11 +11,14 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
         Color oldColor = g.getColor();
+        Stroke oldStroke = g.getStroke();
+        g.setStroke(new BasicStroke(1.5F));
 
         drawBackground(g, windowWidth, windowHeight, scale);
         drawHorizontalLines(g, originX, originY, scale, transformation);
         drawVerticalLines(g, originX, originY, scale, transformation);
 
+        g.setStroke(oldStroke);
         g.setColor(oldColor);
 
     }
