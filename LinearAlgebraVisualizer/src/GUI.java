@@ -34,10 +34,9 @@ public class GUI extends JPanel {
         if (vectorManager.getMode() == 0) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
         }
-        if (vectorManager.getMode() == 1) {
+        else if (vectorManager.getMode() == 1) {
             vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);
         }
-
     }
 
     public static void main(String[] args) {
