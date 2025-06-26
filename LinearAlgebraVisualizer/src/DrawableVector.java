@@ -4,6 +4,8 @@ import java.awt.geom.AffineTransform;
 public class DrawableVector extends Vector2D implements Drawable {
     private Color color;
     private String name;
+    public int originX;
+    public int originY;
 
     public DrawableVector(double x, double y, Color color, String name) {
         super(x,y);
@@ -11,27 +13,29 @@ public class DrawableVector extends Vector2D implements Drawable {
         this.name = name;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+    public void setColor(Color color) {this.color = color;}
+    public Color getColor() {return color;}
+
+    public void setOriginX(int originX) {this.originX = originX;}
+    public void setOriginY(int originY) {this.originY = originY;}
+
+    public int getOriginX() {return originX;}
+    public int getOriginY() {return originY;}
 
     @Override
-    public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
-        int originX = windowWidth / 2;
-        int originY = windowHeight / 2;
-        Stroke oldStroke = g.getStroke();
-
+    public void draw(Graphics2D g,int windowWidth, int windowHeight, int scale) {
         g.setColor(color);
-        int endX= (int) (originX + scale * getX());
-        int endY= (int) (originY - scale * getY());
+
+        int originX = getOriginX();
+        int originY = getOriginY();
+
+        int endX = (int) (originX + scale * getX());
+        int endY = (int) (originY - scale * getY());
+
         drawLine(g, originX, originY, endX, endY, color);
         drawArrowhead(g, originX, originY, endX, endY, color);
-
-        g.setFont(new Font("Arial", Font.PLAIN, 14));
         g.setColor(Color.white);
-        g.drawString(name, endX + 5, endY - 5);
-
-        g.setStroke(oldStroke);
+        g.drawString(name, endX, endY);
     }
 
     private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
@@ -62,27 +66,30 @@ public class DrawableVector extends Vector2D implements Drawable {
         g2d.dispose();
     }
 
-    public static void drawVectorSum(Graphics2D g, DrawableVector v1, DrawableVector v2, int windowWidth, int windowHeight, int scale) {
+    public int calculateEndX(DrawableVector v, int scale) {
+        return (int) (originX + v.getX() * scale);}
 
-        // draw v1 starting from origin
-        int originX_v1 = windowWidth / 2;
-        int originY_v1 = windowHeight / 2;
+    public int calculateEndY(DrawableVector v, int scale) {
+        return (int) (originY - v.getY() * scale);}
 
-        int endX_v1 = (int) (originX_v1 + scale * v1.getX());
-        int endY_v1 = (int) (originY_v1 - scale * v1.getY());
+    public void drawVectorSum(Graphics2D g, DrawableVector v1, DrawableVector v2, int windowWidth, int windowHeight, int scale) {
+        // sets origin of v2 based of ending point of v1
+        originX = calculateEndX(v1, scale);
+        originY = calculateEndY(v1,scale);
 
-        drawLine(g, originX_v1, originY_v1, endX_v1, endY_v1, v1.color);
-        drawArrowhead(g, originX_v1, originY_v1, endX_v1, endY_v1, v1.color);
+        // calculates ending point of v2
+        int endX_v2 = calculateEndX(v2, scale);
+        int endY_v2 = calculateEndY(v2, scale);
 
-        // set v2 origin based on ending point of v1
-        int endX_v2 = (int) (endX_v1 + scale * v2.getX());
-        int endY_v2 = (int) (endY_v1 - scale * v2.getY());
+        drawLine(g, originX, originY, endX_v2, endY_v2, v2.color);
+        drawArrowhead(g, originX, originY, endX_v2, endY_v2, v2.color);
 
-        drawLine(g, endX_v1, endY_v1, endX_v2, endY_v2, v2.color);
-        drawArrowhead(g, endX_v1, endY_v1, endX_v2, endY_v2, v2.color);
+        // setting origin on ending point of v2
+        setOriginX(endX_v2);
+        setOriginY(endY_v2);
 
         // draws sum of v1, v2
-        drawLine(g, originX_v1, originY_v1, endX_v2, endY_v2, Color.BLUE);
-        drawArrowhead(g, originX_v1, originY_v1, endX_v2, endY_v2, Color.BLUE);
+        //drawLine(g, originX, originY, endX_v2, endY_v2, Color.BLUE);
+        //drawArrowhead(g, originX, originY, endX_v2, endY_v2, Color.BLUE);
     }
 }

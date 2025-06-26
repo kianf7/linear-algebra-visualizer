@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class CoordinateGrid implements Drawable {
+public class CoordinateGrid implements Drawable{
 
     public CoordinateGrid() {
     }
