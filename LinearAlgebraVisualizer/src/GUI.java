@@ -26,11 +26,12 @@ public class GUI extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         //TODO add everything that should be drawn
-        CoordinateGrid gridTest = new CoordinateGrid();
-        gridTest.draw(g2d, getWidth(), getHeight(), scale);
+        CoordinateGrid backgroundGrid = new CoordinateGrid();
+        TransformableGrid gridTest = new TransformableGrid();
+        gridTest.draw(g2d, getWidth(), getHeight(), scale, new Matrix2D(1,0,0,1));
 
         if (vectorManager != null) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
