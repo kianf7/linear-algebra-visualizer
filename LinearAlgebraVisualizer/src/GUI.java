@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 public class GUI extends JPanel {
     private int scale;
@@ -41,9 +42,8 @@ public class GUI extends JPanel {
     public static void main(String[] args) {
 
         try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException |
-                 IllegalAccessException | UnsupportedLookAndFeelException e) {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
 
@@ -51,24 +51,13 @@ public class GUI extends JPanel {
         GUI testGui = new GUI(35);
 
         JTextField vectorXField = new JTextField(5);
-        vectorXField.setBackground(Color.darkGray);
-        vectorXField.setForeground(Color.white);
         JTextField vectorYField = new JTextField(5);
-        vectorYField.setBackground(Color.darkGray);
-        vectorYField.setForeground(Color.white);
         JButton showVectorButton = new JButton("Add vector");
-        showVectorButton.setBackground(Color.darkGray);
-        showVectorButton.setForeground(Color.white);
         JButton vectorColorButton = new JButton("Choose color");
-        vectorColorButton.setBackground(Color.darkGray);
-        vectorColorButton.setForeground(Color.white);
         JLabel labelX = new JLabel("x:");
-        labelX.setForeground(Color.white);
         JLabel labelY = new JLabel("y:");
-        labelY.setForeground(Color.white);
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setBackground(new Color(30,30,30));
         inputPanel.add(labelX);
         inputPanel.add(vectorXField);
         inputPanel.add(labelY);
