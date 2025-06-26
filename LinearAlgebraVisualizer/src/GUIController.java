@@ -4,28 +4,15 @@ import java.awt.*;
 public class GUIController {
     //TODO: add objects for all elements that have a listener
     private final GUI gui;
-    private final JButton showVectorButton;
-    private final JTextField vectorXField;
-    private final JTextField vectorYField;
     private final VectorManager vectorManager;
-    private final JButton vectorColorButton;
-    private final JPanel colorPreview;
-    private final JButton removeLastVectorButton;
-    private final JSlider transformationSlider;
     private final Matrix2D transformation;
+    private final GUIComponents components;
 
-    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton, JPanel colorPreview, JButton removeLastVectorButton, JSlider transformationSlider, Matrix2D transformation) {
+    public GUIController(GUI gui, GUIComponents components, Matrix2D transformation) {
         this.gui = gui;
-        this.showVectorButton = showVectorButton;
-        this.vectorXField = vectorXField;
-        this.vectorYField = vectorYField;
-        this.vectorColorButton = vectorColorButton;
-        this.colorPreview = colorPreview;
-        this.removeLastVectorButton = removeLastVectorButton;
-        this.transformationSlider = transformationSlider;
         this.transformation = transformation;
-
         this.vectorManager = new VectorManager(gui);
+        this.components = components;
         initializeListeners();
     }
 
@@ -33,40 +20,40 @@ public class GUIController {
     public void initializeListeners() {
         //TODO: add all elements that have a listener
 
-        showVectorButton.addActionListener(e -> {
+        components.showVectorButton().addActionListener(e -> {
             try {
-                double inputX = Double.parseDouble(vectorXField.getText());
-                double inputY = Double.parseDouble(vectorYField.getText());
-                vectorXField.setText("");
-                vectorYField.setText("");
+                double inputX = Double.parseDouble(components.vectorXField().getText());
+                double inputY = Double.parseDouble(components.vectorYField().getText());
+                components.vectorXField().setText("");
+                components.vectorYField().setText("");
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
                 vectorManager.addVector(inputVector);
                 gui.repaint();
             } catch (NumberFormatException ex) {
-                vectorXField.setText("");
-                vectorYField.setText("");
+                components.vectorXField().setText("");
+                components.vectorYField().setText("");
                 JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
         });
 
-        vectorColorButton.addActionListener(e -> {
+        components.vectorColorButton().addActionListener(e -> {
             Color chosen = JColorChooser.showDialog(gui, "Choose color", Color.white);
             if (chosen != null) {
-                colorPreview.setBackground(chosen);
+                components.colorPreview().setBackground(chosen);
                 vectorManager.setCurrentColor(chosen);
             }
 
         });
 
-        removeLastVectorButton.addActionListener(e -> {
+        components.removeLastVectorButton().addActionListener(e -> {
             if (vectorManager.removeVector() == -1) {
                 JOptionPane.showMessageDialog(gui,"No vector to remove!");
             }
         });
 
-        transformationSlider.addChangeListener(e -> {
-            int value = transformationSlider.getValue();
+        components.transformationSlider().addChangeListener(e -> {
+            int value = components.transformationSlider().getValue();
             double t = value / 100.0;
 
             Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), transformation, t);

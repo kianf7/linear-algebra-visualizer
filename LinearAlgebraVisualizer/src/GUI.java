@@ -6,6 +6,7 @@ public class GUI extends JPanel {
     private int scale;
     private VectorManager vectorManager;
     private Matrix2D transformation = Matrix2D.identity();
+    TransformableGrid gridTest = new TransformableGrid(30);
 
     GUI(int scale) {
         setBackground(Color.BLACK);
@@ -36,7 +37,6 @@ public class GUI extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         //TODO add everything that should be drawn
-        TransformableGrid gridTest = new TransformableGrid(30);
         gridTest.draw(g2d, getWidth(), getHeight(), scale, transformation);
 
         if (vectorManager != null) {
@@ -91,9 +91,12 @@ public class GUI extends JPanel {
         inputPanel2.add(new JLabel("Transformation %:"));
         inputPanel2.add(transformationSlider);
 
-        Matrix2D target = new Matrix2D(-2,-1,0.5,1);
+        Matrix2D target = new Matrix2D(0,0,0,0);
 
-        new GUIController(testGui, showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, target);
+        //TODO: Add all GUI components with an action to class GUIComponents and here
+        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider);
+
+        new GUIController(testGui,components, target);
         frame.setLayout(new BorderLayout());
         frame.add(testGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);
