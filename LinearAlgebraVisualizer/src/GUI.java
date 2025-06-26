@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class GUI extends JPanel {
     private int scale;
@@ -29,9 +28,8 @@ public class GUI extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         //TODO add everything that should be drawn
-        CoordinateGrid backgroundGrid = new CoordinateGrid();
-        TransformableGrid gridTest = new TransformableGrid();
-        gridTest.draw(g2d, getWidth(), getHeight(), scale, new Matrix2D(1,0,0,1));
+        TransformableGrid gridTest = new TransformableGrid(30);
+        gridTest.draw(g2d, getWidth(), getHeight(), scale, new Matrix2D(1,2,-1,1));
 
         if (vectorManager != null) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);

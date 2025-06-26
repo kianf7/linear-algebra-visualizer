@@ -1,14 +1,20 @@
 import java.awt.*;
 
 public class TransformableGrid extends CoordinateGrid implements Transformable{
-    private final int MAX_GRID_LINES = 30;
+    private final int MAX_GRID_LINES;
+
+    public TransformableGrid(int MAX_GRID_LINES) {
+        this.MAX_GRID_LINES = MAX_GRID_LINES;
+    }
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
-        //TODO
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
+
+        drawBackground(g, windowWidth, windowHeight, scale);
         drawHorizontalLines(g, originX, originY, scale, transformation);
-        drawVerticalLines(g,originX,originY,scale,transformation);
+        drawVerticalLines(g, originX, originY, scale, transformation);
+
     }
 
     public void drawVerticalLines(Graphics2D g, int originX, int originY, int scale, Matrix2D transformation) {
@@ -16,7 +22,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
             if (currentX == 0) {
                 g.setColor(Color.white);
             } else {
-                g.setColor(Color.CYAN);
+                g.setColor(Color.cyan);
             }
             Vector2D top = new Vector2D(currentX, MAX_GRID_LINES);
             Vector2D bottom = new Vector2D(currentX, -MAX_GRID_LINES);
@@ -31,7 +37,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
             if (currentY == 0) {
                 g.setColor(Color.white);
             } else {
-                g.setColor(Color.CYAN);
+                g.setColor(Color.cyan);
             }
             Vector2D right = new Vector2D(MAX_GRID_LINES, currentY);
             Vector2D left = new Vector2D(-MAX_GRID_LINES, currentY);
@@ -48,5 +54,23 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
         int y2 = originY - (int) (b.getY() * scale);
 
         g.drawLine(x1,y1,x2,y2);
+    }
+
+    public void drawBackground(Graphics g, int windowWidth, int windowHeight, int scale) {
+        g.setColor(Color.darkGray);
+        int originX = windowWidth / 2;
+        int originY = windowHeight / 2;
+
+
+        //Starting points for the grid
+        int startX = originX % scale;
+        int startY = originY % scale;
+
+        for (int x = startX; x <= windowWidth; x += scale) {
+            g.drawLine(x, 0, x, windowHeight);
+        }
+        for (int y = startY; y <= windowHeight; y += scale) {
+            g.drawLine(0, y, windowWidth, y);
+        }
     }
 }

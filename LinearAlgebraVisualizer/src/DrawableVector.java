@@ -19,13 +19,19 @@ public class DrawableVector extends Vector2D implements Drawable {
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
+        Stroke oldStroke = g.getStroke();
+
         g.setColor(color);
         int endX= (int) (originX + scale * getX());
         int endY= (int) (originY - scale * getY());
         drawLine(g, originX, originY, endX, endY, Color.red);
         drawArrowhead(g, originX, originY, endX, endY, Color.red);
+
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
         g.setColor(Color.white);
-        g.drawString(name, endX, endY);
+        g.drawString(name, endX + 5, endY - 5);
+
+        g.setStroke(oldStroke);
     }
 
     private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
