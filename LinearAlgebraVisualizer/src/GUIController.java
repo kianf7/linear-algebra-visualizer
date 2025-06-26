@@ -8,12 +8,14 @@ public class GUIController {
     private final JTextField vectorXField;
     private final JTextField vectorYField;
     private final VectorManager vectorManager;
+    private final JTextField vectorName;
 
-    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField) {
+    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JTextField vectorName) {
         this.gui = gui;
         this.showVectorButton = showVectorButton;
         this.vectorXField = vectorXField;
         this.vectorYField = vectorYField;
+        this.vectorName = vectorName;
 
         this.vectorManager = new VectorManager(gui);
         initializeListeners();
@@ -27,6 +29,7 @@ public class GUIController {
             try {
                 double inputX = Double.parseDouble(vectorXField.getText());
                 double inputY = Double.parseDouble(vectorYField.getText());
+                double name = vectorName.getText().toString();
 
                 DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green);
                 vectorManager.addVector(inputVector);

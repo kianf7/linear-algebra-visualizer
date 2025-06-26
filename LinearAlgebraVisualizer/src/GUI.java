@@ -44,6 +44,7 @@ public class GUI extends JPanel {
 
         JTextField vectorXField = new JTextField(5);
         JTextField vectorYField = new JTextField(5);
+        JTextField vectorName = new JTextField(5);
         JButton showVectorButton = new JButton("Add Vector");
 
         JPanel inputPanel = new JPanel();
@@ -52,9 +53,11 @@ public class GUI extends JPanel {
         inputPanel.add(vectorXField);
         inputPanel.add(new JLabel("y:"));
         inputPanel.add(vectorYField);
+        inputPanel.add(new JLabel("Name:"));
+        inputPanel.add(vectorName);
         inputPanel.add(showVectorButton);
 
-        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField);
+        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorName);
         frame.setLayout(new BorderLayout());
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(testGui, BorderLayout.CENTER);

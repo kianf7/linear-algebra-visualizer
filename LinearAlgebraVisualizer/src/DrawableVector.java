@@ -3,10 +3,12 @@ import java.awt.geom.AffineTransform;
 
 public class DrawableVector extends Vector2D implements Drawable {
     private Color color;
+    private String name;
 
-    public DrawableVector(double x, double y, Color color) {
+    public DrawableVector(double x, double y, Color color, String name) {
         super(x,y);
         this.color = color;
+        this.name = name;
     }
 
     public void setColor(Color color) {
