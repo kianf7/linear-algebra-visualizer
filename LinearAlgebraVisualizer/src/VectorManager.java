@@ -29,6 +29,9 @@ public class VectorManager implements Drawable{
             return 0;
         }
     }
+    public void clearVectors() {
+        inputVectors.clear();
+    }
     // mode for differentiating between different drawing options
     public void setMode(int mode) {
         this.mode = mode;
@@ -36,6 +39,7 @@ public class VectorManager implements Drawable{
     public int getMode() {
         return mode;
     }
+
 
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {

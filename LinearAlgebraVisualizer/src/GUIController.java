@@ -27,9 +27,13 @@ public class GUIController {
         //TODO: add all elements that have a listener
 
         showVectorButton.addActionListener(e -> {
-            vectorManager.setMode(0);
+            // if mode is switched clear vectors
+            if (vectorManager.getMode() != 0) {
+                vectorManager.setMode(0);
+                vectorManager.clearVectors();
+                gui.repaint();
+            }
             try {
-
                 double inputX = Double.parseDouble(vectorXField.getText());
                 double inputY = Double.parseDouble(vectorYField.getText());
                 vectorXField.setText("");
@@ -45,7 +49,12 @@ public class GUIController {
             }
         });
         SumUpButton.addActionListener(e -> {
-            vectorManager.setMode(1);
+            // if mode is switched clear vectors
+            if (vectorManager.getMode() != 1) {
+                vectorManager.setMode(1);
+                vectorManager.clearVectors();
+                gui.repaint();
+            }
             try {
                 double inputX = Double.parseDouble(vectorXField.getText());
                 double inputY = Double.parseDouble(vectorYField.getText());
@@ -59,8 +68,6 @@ public class GUIController {
                 JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
         });
-
-
 
         gui.setVectorManager(vectorManager);
 

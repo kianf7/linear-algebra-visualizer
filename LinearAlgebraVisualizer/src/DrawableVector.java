@@ -35,7 +35,7 @@ public class DrawableVector extends Vector2D implements Drawable {
         drawLine(g, originX, originY, endX, endY, color);
         drawArrowhead(g, originX, originY, endX, endY, color);
         g.setColor(Color.white);
-        g.drawString(name, endX, endY);
+        g.drawString(name, endX - 10, endY -10) ;
     }
 
     private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
