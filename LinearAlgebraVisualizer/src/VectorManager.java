@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private final GUI gui;
+    private int vectorAmount = 0;
 
     public VectorManager(GUI gui) {
         this.gui = gui;
@@ -11,6 +12,7 @@ public class VectorManager implements Drawable{
 
     public void addVector(DrawableVector newVector) {
         inputVectors.add(newVector);
+        vectorAmount += 1;
         gui.repaint();
     }
 
@@ -19,6 +21,7 @@ public class VectorManager implements Drawable{
             return -1;
         } else {
             inputVectors.removeLast();
+            vectorAmount -= 1;
             gui.repaint();
             return 0;
         }
