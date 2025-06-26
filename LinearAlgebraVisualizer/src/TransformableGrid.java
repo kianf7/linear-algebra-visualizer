@@ -10,10 +10,13 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
+        Color oldColor = g.getColor();
 
         drawBackground(g, windowWidth, windowHeight, scale);
         drawHorizontalLines(g, originX, originY, scale, transformation);
         drawVerticalLines(g, originX, originY, scale, transformation);
+
+        g.setColor(oldColor);
 
     }
 
@@ -57,6 +60,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
     }
 
     public void drawBackground(Graphics g, int windowWidth, int windowHeight, int scale) {
+        Color oldColor = g.getColor();
         g.setColor(Color.darkGray);
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
@@ -72,5 +76,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
         for (int y = startY; y <= windowHeight; y += scale) {
             g.drawLine(0, y, windowWidth, y);
         }
+
+        g.setColor(oldColor);
     }
 }

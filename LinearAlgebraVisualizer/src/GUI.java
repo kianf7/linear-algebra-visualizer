@@ -27,6 +27,7 @@ public class GUI extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
         //TODO add everything that should be drawn
         TransformableGrid gridTest = new TransformableGrid(30);
         gridTest.draw(g2d, getWidth(), getHeight(), scale, new Matrix2D(1,2,-1,1));
@@ -43,7 +44,8 @@ public class GUI extends JPanel {
 
         JTextField vectorXField = new JTextField(5);
         JTextField vectorYField = new JTextField(5);
-        JButton showVectorButton = new JButton("Add Vector");
+        JButton showVectorButton = new JButton("Add vector");
+        JButton vectorColorButton = new JButton("Choose color");
 
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(Color.gray);
@@ -52,8 +54,9 @@ public class GUI extends JPanel {
         inputPanel.add(new JLabel("y:"));
         inputPanel.add(vectorYField);
         inputPanel.add(showVectorButton);
+        inputPanel.add(vectorColorButton);
 
-        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField);
+        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorColorButton);
         frame.setLayout(new BorderLayout());
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(testGui, BorderLayout.CENTER);

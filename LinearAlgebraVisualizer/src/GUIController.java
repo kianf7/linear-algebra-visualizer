@@ -8,12 +8,14 @@ public class GUIController {
     private final JTextField vectorXField;
     private final JTextField vectorYField;
     private final VectorManager vectorManager;
+    private final JButton vectorColorButton;
 
-    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField) {
+    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton) {
         this.gui = gui;
         this.showVectorButton = showVectorButton;
         this.vectorXField = vectorXField;
         this.vectorYField = vectorYField;
+        this.vectorColorButton = vectorColorButton;
 
         this.vectorManager = new VectorManager(gui);
         initializeListeners();
@@ -30,12 +32,20 @@ public class GUIController {
                 vectorXField.setText("");
                 vectorYField.setText("");
                 String name = "v" +vectorManager.getVectorAmount();
-                DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
+                DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
                 vectorManager.addVector(inputVector);
                 gui.repaint();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
+        });
+
+        vectorColorButton.addActionListener(e -> {
+            Color chosen = JColorChooser.showDialog(gui, "Choose color", Color.white);
+            if (chosen != null) {
+                vectorManager.setCurrentColor(chosen);
+            }
+
         });
 
 

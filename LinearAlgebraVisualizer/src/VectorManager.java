@@ -5,6 +5,7 @@ public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private final GUI gui;
     private int vectorAmount = 0;
+    private Color currentColor = Color.white;
 
     public VectorManager(GUI gui) {
         this.gui = gui;
@@ -12,7 +13,12 @@ public class VectorManager implements Drawable{
     public int getVectorAmount() {
         return vectorAmount;
     }
+
+    public void setCurrentColor(Color newColor) {
+        currentColor = newColor;
+    }
     public void addVector(DrawableVector newVector) {
+        newVector.setColor(currentColor);
         inputVectors.add(newVector);
         vectorAmount += 1;
         gui.repaint();
