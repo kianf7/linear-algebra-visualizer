@@ -27,8 +27,10 @@ public class GUIController {
             try {
                 double inputX = Double.parseDouble(vectorXField.getText());
                 double inputY = Double.parseDouble(vectorYField.getText());
-
-                DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green);
+                vectorXField.setText("");
+                vectorYField.setText("");
+                String name = "v" +vectorManager.getVectorAmount();
+                DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
                 vectorManager.addVector(inputVector);
                 gui.repaint();
             } catch (NumberFormatException ex) {

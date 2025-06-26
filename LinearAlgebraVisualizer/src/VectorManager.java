@@ -9,7 +9,9 @@ public class VectorManager implements Drawable{
     public VectorManager(GUI gui) {
         this.gui = gui;
     }
-
+    public int getVectorAmount() {
+        return vectorAmount;
+    }
     public void addVector(DrawableVector newVector) {
         inputVectors.add(newVector);
         vectorAmount += 1;

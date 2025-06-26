@@ -24,8 +24,8 @@ public class DrawableVector extends Vector2D implements Drawable {
         int endY= (int) (originY - scale * getY());
         drawLine(g, originX, originY, endX, endY, Color.red);
         drawArrowhead(g, originX, originY, endX, endY, Color.red);
-
-        
+        g.setColor(Color.white);
+        g.drawString(name, endX, endY);
     }
 
     private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
