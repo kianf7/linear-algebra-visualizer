@@ -5,6 +5,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 public class GUI extends JPanel {
     private int scale;
     private VectorManager vectorManager;
+    private Matrix2D transformation = Matrix2D.identity();
 
     GUI(int scale) {
         setBackground(Color.BLACK);
@@ -22,6 +23,11 @@ public class GUI extends JPanel {
         this.vectorManager = vectorManager;
     }
 
+    public void setTransformation(Matrix2D target) {
+        transformation = target;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -31,7 +37,7 @@ public class GUI extends JPanel {
 
         //TODO add everything that should be drawn
         TransformableGrid gridTest = new TransformableGrid(30);
-        gridTest.draw(g2d, getWidth(), getHeight(), scale, new Matrix2D(1,2,-1,1));
+        gridTest.draw(g2d, getWidth(), getHeight(), scale, transformation);
 
         if (vectorManager != null) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
@@ -61,6 +67,7 @@ public class GUI extends JPanel {
         colorPreview.setPreferredSize(new Dimension(20, 20));
         colorPreview.setBackground(Color.WHITE);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        JButton removeLastVectorButton = new JButton("Remove last vector");
 
 
         JPanel inputPanel = new JPanel();
@@ -69,15 +76,28 @@ public class GUI extends JPanel {
         inputPanel.add(labelY);
         inputPanel.add(vectorYField);
         inputPanel.add(showVectorButton);
+        inputPanel.add(removeLastVectorButton);
         inputPanel.add(vectorColorButton);
-        inputPanel.add(colorLabel);
         inputPanel.add(colorLabel);
         inputPanel.add(colorPreview);
 
-        GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorColorButton, colorPreview);
+        JSlider transformationSlider = new JSlider(0,100,0);
+        transformationSlider.setMajorTickSpacing(20);
+        transformationSlider.setMinorTickSpacing(5);
+        transformationSlider.setPaintTicks(true);
+        transformationSlider.setPaintLabels(true);
+
+        JPanel inputPanel2 = new JPanel();
+        inputPanel2.add(new JLabel("Transformation %:"));
+        inputPanel2.add(transformationSlider);
+
+        Matrix2D target = new Matrix2D(-2,-1,0.5,1);
+
+        new GUIController(testGui, showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, target);
         frame.setLayout(new BorderLayout());
         frame.add(testGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);
+        frame.add(inputPanel2, BorderLayout.SOUTH);
         frame.setSize(800,600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

@@ -34,4 +34,17 @@ public class Matrix2D {
         double transformedY = c * v.getX() + d * v.getY();
         return new Vector2D(transformedX, transformedY);
     }
+
+    public static Matrix2D identity() {
+        return new Matrix2D(1,0,0,1);
+    }
+
+    public static Matrix2D interpolate(Matrix2D in, Matrix2D out, double t) {
+        double a = (1 - t) * in.getA() + t * out.getA();
+        double b = (1 - t) * in.getB() + t * out.getB();
+        double c = (1 - t) * in.getC() + t * out.getC();
+        double d = (1 - t) * in.getD() + t * out.getD();
+
+        return new Matrix2D(a,b,c,d);
+    }
 }

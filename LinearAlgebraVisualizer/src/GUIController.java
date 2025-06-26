@@ -10,14 +10,20 @@ public class GUIController {
     private final VectorManager vectorManager;
     private final JButton vectorColorButton;
     private final JPanel colorPreview;
+    private final JButton removeLastVectorButton;
+    private final JSlider transformationSlider;
+    private final Matrix2D transformation;
 
-    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton, JPanel colorPreview) {
+    public GUIController(GUI gui, JButton showVectorButton, JTextField vectorXField, JTextField vectorYField, JButton vectorColorButton, JPanel colorPreview, JButton removeLastVectorButton, JSlider transformationSlider, Matrix2D transformation) {
         this.gui = gui;
         this.showVectorButton = showVectorButton;
         this.vectorXField = vectorXField;
         this.vectorYField = vectorYField;
         this.vectorColorButton = vectorColorButton;
         this.colorPreview = colorPreview;
+        this.removeLastVectorButton = removeLastVectorButton;
+        this.transformationSlider = transformationSlider;
+        this.transformation = transformation;
 
         this.vectorManager = new VectorManager(gui);
         initializeListeners();
@@ -38,6 +44,8 @@ public class GUIController {
                 vectorManager.addVector(inputVector);
                 gui.repaint();
             } catch (NumberFormatException ex) {
+                vectorXField.setText("");
+                vectorYField.setText("");
                 JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
         });
@@ -49,6 +57,20 @@ public class GUIController {
                 vectorManager.setCurrentColor(chosen);
             }
 
+        });
+
+        removeLastVectorButton.addActionListener(e -> {
+            if (vectorManager.removeVector() == -1) {
+                JOptionPane.showMessageDialog(gui,"No vector to remove!");
+            }
+        });
+
+        transformationSlider.addChangeListener(e -> {
+            int value = transformationSlider.getValue();
+            double t = value / 100.0;
+
+            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), transformation, t);
+            gui.setTransformation(interpolated);
         });
 
 
