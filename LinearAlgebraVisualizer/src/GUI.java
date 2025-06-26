@@ -39,27 +39,47 @@ public class GUI extends JPanel {
     }
 
     public static void main(String[] args) {
+
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException |
+                 IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
         JFrame frame = new JFrame("Linear Algebra Visualizer");
         GUI testGui = new GUI(35);
 
         JTextField vectorXField = new JTextField(5);
+        vectorXField.setBackground(Color.darkGray);
+        vectorXField.setForeground(Color.white);
         JTextField vectorYField = new JTextField(5);
+        vectorYField.setBackground(Color.darkGray);
+        vectorYField.setForeground(Color.white);
         JButton showVectorButton = new JButton("Add vector");
+        showVectorButton.setBackground(Color.darkGray);
+        showVectorButton.setForeground(Color.white);
         JButton vectorColorButton = new JButton("Choose color");
+        vectorColorButton.setBackground(Color.darkGray);
+        vectorColorButton.setForeground(Color.white);
+        JLabel labelX = new JLabel("x:");
+        labelX.setForeground(Color.white);
+        JLabel labelY = new JLabel("y:");
+        labelY.setForeground(Color.white);
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setBackground(Color.gray);
-        inputPanel.add(new JLabel("x:"));
+        inputPanel.setBackground(new Color(30,30,30));
+        inputPanel.add(labelX);
         inputPanel.add(vectorXField);
-        inputPanel.add(new JLabel("y:"));
+        inputPanel.add(labelY);
         inputPanel.add(vectorYField);
         inputPanel.add(showVectorButton);
         inputPanel.add(vectorColorButton);
 
         GUIController guiController = new GUIController(testGui,showVectorButton,vectorXField, vectorYField, vectorColorButton);
         frame.setLayout(new BorderLayout());
-        frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(testGui, BorderLayout.CENTER);
+        frame.add(inputPanel, BorderLayout.NORTH);
         frame.setSize(800,600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
