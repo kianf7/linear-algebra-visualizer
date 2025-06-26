@@ -38,6 +38,7 @@ public class GUIController {
                 double inputY = Double.parseDouble(vectorYField.getText());
                 vectorXField.setText("");
                 vectorYField.setText("");
+
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
                 inputVector.setOriginX(gui.getWidth()/2);
@@ -60,6 +61,7 @@ public class GUIController {
                 double inputY = Double.parseDouble(vectorYField.getText());
                 vectorXField.setText("");
                 vectorYField.setText("");
+
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
                 vectorManager.addVector(inputVector);

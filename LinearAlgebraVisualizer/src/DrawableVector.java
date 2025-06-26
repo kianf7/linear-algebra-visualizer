@@ -13,29 +13,14 @@ public class DrawableVector extends Vector2D implements Drawable {
         this.name = name;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+    public void setColor(Color color) { this.color = color;}
+    public Color getColor() { return color;}
 
-    public Color getColor() {
-        return color;
-    }
+    public void setOriginX(int originX) { this.originX = originX;}
+    public void setOriginY(int originY) { this.originY = originY;}
 
-    public void setOriginX(int originX) {
-        this.originX = originX;
-    }
-
-    public void setOriginY(int originY) {
-        this.originY = originY;
-    }
-
-    public int getOriginX() {
-        return originX;
-    }
-
-    public int getOriginY() {
-        return originY;
-    }
+    public int getOriginX() { return originX;}
+    public int getOriginY() { return originY;}
 
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
