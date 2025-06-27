@@ -5,16 +5,22 @@ public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
-    private int mode = 0;
+    private int drawingMode; //TODO: Make record with drawing modes, not int
 
     public VectorManager() {
+    }
+
+    public void setDrawingMode(int drawingMode) {
+        this.drawingMode = drawingMode;
+    }
+
+    public int getDrawingMode() {
+        return drawingMode;
     }
 
     public int getVectorAmount() {
         return vectorAmount;
     }
-    public int getMode() { return this.mode; }
-    public void setMode(int mode) { this.mode = mode; }
 
     public void setCurrentColor(Color newColor) {
         currentColor = newColor;
@@ -37,11 +43,10 @@ public class VectorManager implements Drawable{
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         for(DrawableVector vector : inputVectors) {
-            vector.setOriginX(windowWidth / 2);
-            vector.setOriginY(windowHeight / 2);
             vector.draw(g, windowWidth, windowHeight, scale);
         }
     }
+
     public void drawSum(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         double sumX = 0;
         double sumY = 0;
@@ -51,26 +56,22 @@ public class VectorManager implements Drawable{
         if (inputVectors.isEmpty()) {
             return;
         }
+        int startX = originX;
+        int startY = originY;
         for (DrawableVector v : inputVectors) {
             if (inputVectors.size() == 1) {
-                v.setOriginX(originX);
-                v.setOriginY(originY);
                 v.draw(g, windowWidth, windowHeight, scale);
                 return;
             }
-            v.setOriginX(originX);
-            v.setOriginY(originY);
-            v.draw(g, windowWidth, windowHeight, scale);
+            v.drawUnlockedFromOrigin(g, startX, startY, scale);
 
-            originX = v.calculateEndX(v, scale);
-            originY = v.calculateEndY(v, scale);
+            startX = v.calculateEndX(startX, scale);
+            startY = v.calculateEndY(startY,scale);
 
             sumX += v.getX();
             sumY += v.getY();
         }
         DrawableVector sum = new DrawableVector(sumX,sumY,Color.blue,"sum");
-        sum.setOriginX(windowWidth / 2);
-        sum.setOriginY(windowHeight / 2);
         sum.draw(g,windowWidth,windowHeight,scale);
     }
 }
