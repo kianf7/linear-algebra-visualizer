@@ -78,10 +78,12 @@ public class GUIController {
 
         gui.addMouseWheelListener(e -> {
             if (e.getWheelRotation() < 0) {
-                gui.setScale(gui.getScale() + 3);
+                int newScale = (int) (gui.getScale() * 1.1);
+                gui.setScale(newScale);
                 gui.repaint();
-            } else if (e.getWheelRotation() > 0 && gui.getScale() > 5) {
-                gui.setScale(gui.getScale() - 3);
+            } else if (e.getWheelRotation() > 0 && gui.getScale() > 10) {
+                int newScale = (int) (gui.getScale() / 1.1);
+                gui.setScale(newScale);
                 gui.repaint();
             }
         });
