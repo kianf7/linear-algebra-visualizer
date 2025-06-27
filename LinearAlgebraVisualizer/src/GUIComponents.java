@@ -8,5 +8,6 @@ public record GUIComponents (
         JButton vectorColorButton,
         JPanel colorPreview,
         JButton removeLastVectorButton,
-        JSlider transformationSlider
+        JSlider transformationSlider,
+        JButton sumVectorsButton
 ) {}

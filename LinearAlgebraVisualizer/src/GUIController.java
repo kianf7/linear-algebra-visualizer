@@ -26,6 +26,12 @@ public class GUIController {
                 double inputY = Double.parseDouble(components.vectorYField().getText());
                 components.vectorXField().setText("");
                 components.vectorYField().setText("");
+
+                if (vectorManager.getDrawingMode() != 0) {
+                    vectorManager.setDrawingMode(0);
+                    gui.repaint();
+                }
+
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
                 vectorManager.addVector(inputVector);
@@ -50,6 +56,7 @@ public class GUIController {
             if (vectorManager.removeVector() == -1) {
                 JOptionPane.showMessageDialog(gui,"No vector to remove!");
             }
+            vectorManager.setDrawingMode(0);
             gui.repaint();
         });
 
@@ -60,6 +67,13 @@ public class GUIController {
             Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), testTransformation, t);
             matrixManager.setTransformation(interpolated);
             gui.repaint();
+        });
+
+        components.sumVectorsButton().addActionListener(e -> {
+            if (vectorManager.getDrawingMode() != 1) {
+                vectorManager.setDrawingMode(1);
+                gui.repaint();
+            }
         });
 
         gui.setVectorManager(vectorManager);

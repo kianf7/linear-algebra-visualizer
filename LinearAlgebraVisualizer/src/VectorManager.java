@@ -5,8 +5,17 @@ public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
+    private int drawingMode; //TODO: Make record with drawing modes, not int
 
     public VectorManager() {
+    }
+
+    public void setDrawingMode(int drawingMode) {
+        this.drawingMode = drawingMode;
+    }
+
+    public int getDrawingMode() {
+        return drawingMode;
     }
 
     public int getVectorAmount() {
@@ -36,5 +45,33 @@ public class VectorManager implements Drawable{
         for(DrawableVector vector : inputVectors) {
             vector.draw(g, windowWidth, windowHeight, scale);
         }
+    }
+
+    public void drawSum(Graphics2D g, int windowWidth, int windowHeight, int scale) {
+        double sumX = 0;
+        double sumY = 0;
+        int originX = windowWidth / 2;
+        int originY = windowHeight / 2;
+
+        if (inputVectors.isEmpty()) {
+            return;
+        }
+        int startX = originX;
+        int startY = originY;
+        for (DrawableVector v : inputVectors) {
+            if (inputVectors.size() == 1) {
+                v.draw(g, windowWidth, windowHeight, scale);
+                return;
+            }
+            v.drawUnlockedFromOrigin(g, startX, startY, scale);
+
+            startX = v.calculateEndX(startX, scale);
+            startY = v.calculateEndY(startY,scale);
+
+            sumX += v.getX();
+            sumY += v.getY();
+        }
+        DrawableVector sum = new DrawableVector(sumX,sumY,Color.blue,"sum");
+        sum.draw(g,windowWidth,windowHeight,scale);
     }
 }

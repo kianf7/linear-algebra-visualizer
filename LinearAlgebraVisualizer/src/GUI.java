@@ -39,9 +39,15 @@ public class GUI extends JPanel {
         //TODO add everything that should be drawn
         gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
 
-        if (vectorManager != null) {
+        //TODO: Maybe add switch case for different modes
+        if (vectorManager.getDrawingMode() == 0) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
         }
+        else if (vectorManager.getDrawingMode() == 1) {
+            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);
+        }
+
+
 
     }
 
@@ -68,6 +74,7 @@ public class GUI extends JPanel {
         colorPreview.setBackground(Color.WHITE);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JButton removeLastVectorButton = new JButton("Remove last vector");
+        JButton sumVectorsButton = new JButton("Sum Vectors");
 
 
         JPanel inputPanel = new JPanel();
@@ -80,6 +87,7 @@ public class GUI extends JPanel {
         inputPanel.add(vectorColorButton);
         inputPanel.add(colorLabel);
         inputPanel.add(colorPreview);
+        inputPanel.add(sumVectorsButton);
 
         JSlider transformationSlider = new JSlider(0,1000,0);
         transformationSlider.setMajorTickSpacing(20);
@@ -90,7 +98,7 @@ public class GUI extends JPanel {
         inputPanel2.add(transformationSlider);
 
         //TODO: Add all GUI components with an action to class GUIComponents and here
-        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider);
+        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton);
 
         new GUIController(testGui,components);
         frame.setLayout(new BorderLayout());
