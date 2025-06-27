@@ -3,13 +3,12 @@ import java.util.ArrayList;
 
 public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
-    private final GUI gui;
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
 
-    public VectorManager(GUI gui) {
-        this.gui = gui;
+    public VectorManager() {
     }
+
     public int getVectorAmount() {
         return vectorAmount;
     }
@@ -21,7 +20,6 @@ public class VectorManager implements Drawable{
         newVector.setColor(currentColor);
         inputVectors.add(newVector);
         vectorAmount += 1;
-        gui.repaint();
     }
 
     public int removeVector() {
@@ -30,7 +28,6 @@ public class VectorManager implements Drawable{
         } else {
             inputVectors.removeLast();
             vectorAmount -= 1;
-            gui.repaint();
             return 0;
         }
     }

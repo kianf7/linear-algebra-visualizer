@@ -5,7 +5,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 public class GUI extends JPanel {
     private int scale;
     private VectorManager vectorManager;
-    private Matrix2D transformation = Matrix2D.identity();
+    private MatrixManager matrixManager;
     TransformableGrid gridTest = new TransformableGrid(30);
 
     GUI(int scale) {
@@ -24,8 +24,8 @@ public class GUI extends JPanel {
         this.vectorManager = vectorManager;
     }
 
-    public void setTransformation(Matrix2D target) {
-        transformation = target;
+    public void setMatrixManager(MatrixManager matrixManager) {
+        this.matrixManager = matrixManager;
         repaint();
     }
 
@@ -37,7 +37,7 @@ public class GUI extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         //TODO add everything that should be drawn
-        gridTest.draw(g2d, getWidth(), getHeight(), scale, transformation);
+        gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
 
         if (vectorManager != null) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
@@ -81,22 +81,18 @@ public class GUI extends JPanel {
         inputPanel.add(colorLabel);
         inputPanel.add(colorPreview);
 
-        JSlider transformationSlider = new JSlider(0,100,0);
+        JSlider transformationSlider = new JSlider(0,1000,0);
         transformationSlider.setMajorTickSpacing(20);
         transformationSlider.setMinorTickSpacing(5);
-        transformationSlider.setPaintTicks(true);
-        transformationSlider.setPaintLabels(true);
 
         JPanel inputPanel2 = new JPanel();
-        inputPanel2.add(new JLabel("Transformation %:"));
+        inputPanel2.add(new JLabel("Transformation:"));
         inputPanel2.add(transformationSlider);
-
-        Matrix2D target = new Matrix2D(0,0,0,0);
 
         //TODO: Add all GUI components with an action to class GUIComponents and here
         GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider);
 
-        new GUIController(testGui,components, target);
+        new GUIController(testGui,components);
         frame.setLayout(new BorderLayout());
         frame.add(testGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);

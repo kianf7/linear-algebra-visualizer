@@ -2,17 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIController {
-    //TODO: add objects for all elements that have a listener
     private final GUI gui;
     private final VectorManager vectorManager;
-    private final Matrix2D transformation;
     private final GUIComponents components;
+    private final MatrixManager matrixManager;
+    private final Matrix2D testTransformation = new Matrix2D(-5,3,-2,5); //This will later be input over gui
 
-    public GUIController(GUI gui, GUIComponents components, Matrix2D transformation) {
+    public GUIController(GUI gui, GUIComponents components) {
         this.gui = gui;
-        this.transformation = transformation;
-        this.vectorManager = new VectorManager(gui);
         this.components = components;
+        this.vectorManager = new VectorManager();
+        this.matrixManager = new MatrixManager();
         initializeListeners();
     }
 
@@ -50,20 +50,20 @@ public class GUIController {
             if (vectorManager.removeVector() == -1) {
                 JOptionPane.showMessageDialog(gui,"No vector to remove!");
             }
+            gui.repaint();
         });
 
         components.transformationSlider().addChangeListener(e -> {
             int value = components.transformationSlider().getValue();
-            double t = value / 100.0;
+            double t = value / 1000.0;
 
-            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), transformation, t);
-            gui.setTransformation(interpolated);
+            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), testTransformation, t);
+            matrixManager.setTransformation(interpolated);
+            gui.repaint();
         });
 
-
-
         gui.setVectorManager(vectorManager);
-
+        gui.setMatrixManager(matrixManager);
     }
 
 
