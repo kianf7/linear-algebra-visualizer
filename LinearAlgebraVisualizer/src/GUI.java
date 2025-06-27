@@ -39,8 +39,11 @@ public class GUI extends JPanel {
         //TODO add everything that should be drawn
         gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
 
-        if (vectorManager != null) {
+        if (vectorManager.getMode() == 0) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
+        }
+        else if (vectorManager.getMode() == 1) {
+            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);
         }
 
     }

@@ -5,6 +5,7 @@ public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
+    private int mode = 0;
 
     public VectorManager() {
     }
@@ -12,6 +13,8 @@ public class VectorManager implements Drawable{
     public int getVectorAmount() {
         return vectorAmount;
     }
+    public int getMode() { return this.mode; }
+    public void setMode(int mode) { this.mode = mode; }
 
     public void setCurrentColor(Color newColor) {
         currentColor = newColor;

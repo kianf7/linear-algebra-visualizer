@@ -26,6 +26,12 @@ public class GUIController {
                 double inputY = Double.parseDouble(components.vectorYField().getText());
                 components.vectorXField().setText("");
                 components.vectorYField().setText("");
+                // repaint if mode is switched
+                if (vectorManager.getMode() != 0) {
+                    vectorManager.setMode(0);
+                    gui.repaint();
+                }
+
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
                 vectorManager.addVector(inputVector);
