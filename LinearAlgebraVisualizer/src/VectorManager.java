@@ -43,6 +43,8 @@ public class VectorManager implements Drawable{
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         for(DrawableVector vector : inputVectors) {
+            vector.setOriginX(windowWidth / 2);
+            vector.setOriginY(windowHeight / 2);
             vector.draw(g, windowWidth, windowHeight, scale);
         }
     }

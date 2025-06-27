@@ -28,16 +28,16 @@ public class GUIController {
 
         showVectorButton.addActionListener(e -> {
             // if mode is switched clear vectors
-            if (vectorManager.getMode() != 0) {
-                vectorManager.setMode(0);
-                vectorManager.clearVectors();
-                gui.repaint();
-            }
             try {
                 double inputX = Double.parseDouble(vectorXField.getText());
                 double inputY = Double.parseDouble(vectorYField.getText());
                 vectorXField.setText("");
                 vectorYField.setText("");
+
+                if (vectorManager.getMode() != 0) {
+                    vectorManager.setMode(0);
+                    gui.repaint();
+                }
 
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
@@ -49,25 +49,12 @@ public class GUIController {
                 JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
         });
+
         SumUpButton.addActionListener(e -> {
             // if mode is switched clear vectors
             if (vectorManager.getMode() != 1) {
                 vectorManager.setMode(1);
-                vectorManager.clearVectors();
                 gui.repaint();
-            }
-            try {
-                double inputX = Double.parseDouble(vectorXField.getText());
-                double inputY = Double.parseDouble(vectorYField.getText());
-                vectorXField.setText("");
-                vectorYField.setText("");
-
-                String name = "v" +vectorManager.getVectorAmount();
-                DrawableVector inputVector = new DrawableVector(inputX, inputY, Color.green,name);
-                vectorManager.addVector(inputVector);
-                gui.repaint();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(gui, "Invalid Input!");
             }
         });
 
