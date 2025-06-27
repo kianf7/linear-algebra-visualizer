@@ -76,6 +76,16 @@ public class GUIController {
             }
         });
 
+        gui.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0) {
+                gui.setScale(gui.getScale() + 3);
+                gui.repaint();
+            } else if (e.getWheelRotation() > 0 && gui.getScale() > 5) {
+                gui.setScale(gui.getScale() - 3);
+                gui.repaint();
+            }
+        });
+
         gui.setVectorManager(vectorManager);
         gui.setMatrixManager(matrixManager);
     }

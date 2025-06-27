@@ -83,11 +83,11 @@ public class GUI extends JPanel {
         inputPanel.add(labelY);
         inputPanel.add(vectorYField);
         inputPanel.add(showVectorButton);
+        inputPanel.add(sumVectorsButton);
         inputPanel.add(removeLastVectorButton);
         inputPanel.add(vectorColorButton);
         inputPanel.add(colorLabel);
         inputPanel.add(colorPreview);
-        inputPanel.add(sumVectorsButton);
 
         JSlider transformationSlider = new JSlider(0,1000,0);
         transformationSlider.setMajorTickSpacing(20);
