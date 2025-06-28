@@ -40,10 +40,10 @@ public class GUI extends JPanel {
         gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
 
         //TODO: Maybe add switch case for different modes
-        if (vectorManager.getDrawingMode() == 0) {
+        if (vectorManager.getDrawingMode() == DrawingMode.NORMAL) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale);
         }
-        else if (vectorManager.getDrawingMode() == 1) {
+        else if (vectorManager.getDrawingMode() == DrawingMode.SUM) {
             vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);
         }
 
@@ -60,7 +60,7 @@ public class GUI extends JPanel {
         }
 
         JFrame frame = new JFrame("Linear Algebra Visualizer");
-        GUI testGui = new GUI(35);
+        GUI testGui = new GUI(50);
 
         JTextField vectorXField = new JTextField(3);
         JTextField vectorYField = new JTextField(3);

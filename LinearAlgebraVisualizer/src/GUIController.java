@@ -27,8 +27,8 @@ public class GUIController {
                 components.vectorXField().setText("");
                 components.vectorYField().setText("");
 
-                if (vectorManager.getDrawingMode() != 0) {
-                    vectorManager.setDrawingMode(0);
+                if (vectorManager.getDrawingMode() != DrawingMode.NORMAL) {
+                    vectorManager.setDrawingMode(DrawingMode.NORMAL);
                     gui.repaint();
                 }
 
@@ -56,7 +56,7 @@ public class GUIController {
             if (vectorManager.removeVector() == -1) {
                 JOptionPane.showMessageDialog(gui,"No vector to remove!");
             }
-            vectorManager.setDrawingMode(0);
+            vectorManager.setDrawingMode(DrawingMode.NORMAL);
             gui.repaint();
         });
 
@@ -70,8 +70,8 @@ public class GUIController {
         });
 
         components.sumVectorsButton().addActionListener(e -> {
-            if (vectorManager.getDrawingMode() != 1) {
-                vectorManager.setDrawingMode(1);
+            if (vectorManager.getDrawingMode() != DrawingMode.SUM) {
+                vectorManager.setDrawingMode(DrawingMode.SUM);
                 gui.repaint();
             }
         });

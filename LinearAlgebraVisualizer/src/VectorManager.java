@@ -5,16 +5,16 @@ public class VectorManager implements Drawable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
-    private int drawingMode; //TODO: Make record with drawing modes, not int
+    private DrawingMode drawingMode; //TODO: Make record with drawing modes, not int
 
     public VectorManager() {
     }
 
-    public void setDrawingMode(int drawingMode) {
+    public void setDrawingMode(DrawingMode drawingMode) {
         this.drawingMode = drawingMode;
     }
 
-    public int getDrawingMode() {
+    public DrawingMode getDrawingMode() {
         return drawingMode;
     }
 
