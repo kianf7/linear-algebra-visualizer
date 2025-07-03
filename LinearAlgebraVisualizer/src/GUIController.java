@@ -22,15 +22,14 @@ public class GUIController {
 
         components.showVectorButton().addActionListener(e -> {
             try {
+                if (vectorManager.getDrawingMode() != DrawingMode.NORMAL) {
+                    vectorManager.setDrawingMode(DrawingMode.NORMAL);
+                }
+
                 double inputX = Double.parseDouble(components.vectorXField().getText());
                 double inputY = Double.parseDouble(components.vectorYField().getText());
                 components.vectorXField().setText("");
                 components.vectorYField().setText("");
-
-                if (vectorManager.getDrawingMode() != DrawingMode.NORMAL) {
-                    vectorManager.setDrawingMode(DrawingMode.NORMAL);
-                    gui.repaint();
-                }
 
                 String name = "v" +vectorManager.getVectorAmount();
                 DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
