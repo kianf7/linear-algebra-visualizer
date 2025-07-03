@@ -41,7 +41,7 @@ public class GUI extends JPanel {
 
         //TODO: Maybe add switch case for different modes
         if (vectorManager.getDrawingMode() == DrawingMode.NORMAL) {
-            vectorManager.draw(g2d, getWidth(), getHeight(), scale);
+            vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
         }
         else if (vectorManager.getDrawingMode() == DrawingMode.SUM) {
             vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);

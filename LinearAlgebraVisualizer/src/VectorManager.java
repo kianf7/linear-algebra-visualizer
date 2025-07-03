@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class VectorManager implements Drawable{
+public class VectorManager implements Transformable{
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
     private int vectorAmount = 0;
     private Color currentColor = Color.white;
@@ -41,9 +41,13 @@ public class VectorManager implements Drawable{
         }
     }
     @Override
-    public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
+    public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
         for(DrawableVector vector : inputVectors) {
-            vector.draw(g, windowWidth, windowHeight, scale);
+            if (vector instanceof TransformableVector transformableVector) {
+                transformableVector.draw(g, windowWidth, windowHeight, scale, transformation);
+            } else {
+                vector.draw(g, windowWidth, windowHeight, scale);
+            }
         }
     }
 

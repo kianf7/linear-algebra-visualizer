@@ -32,7 +32,8 @@ public class GUIController {
                 components.vectorYField().setText("");
 
                 String name = "v" +vectorManager.getVectorAmount();
-                DrawableVector inputVector = new DrawableVector(inputX, inputY,Color.white,name);
+                //TODO: Maybe add mode/button to change between static & transformable vector
+                TransformableVector inputVector = new TransformableVector(inputX, inputY,Color.white,name);
                 vectorManager.addVector(inputVector);
                 gui.repaint();
             } catch (NumberFormatException ex) {

@@ -15,14 +15,33 @@ public class DrawableVector extends Vector2D implements Drawable {
         this.color = color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    protected Stroke prepare(Graphics2D g, int originX, int originY) {
+        if (Vector2D.isNull(this)) {
+            g.fillOval(originX - 4, originY - 4, 8, 8);
+            return null;
+        }
+        return g.getStroke();
+    }
+
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
-        Stroke oldStroke = g.getStroke();
+
+        Stroke oldStroke = prepare(g, windowWidth, windowHeight);
+        if (oldStroke == null) return;
 
         int endX = calculateEndX(originX, scale);
         int endY = calculateEndY(originY, scale);
+
         drawLine(g, originX, originY, endX, endY, color);
         drawArrowhead(g, originX, originY, endX, endY, color);
 
@@ -45,14 +64,15 @@ public class DrawableVector extends Vector2D implements Drawable {
         g.setColor(Color.white);
         g.drawString(name, endX - 10, endY + 5);
 
+        g.setStroke(oldStroke);
     }
 
-    private static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
+    protected static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
         g.setColor(color);
         g.setStroke(new BasicStroke(2.5F));
         g.drawLine(x1, y1, x2, y2);
     }
-    public static void drawArrowhead(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
+    protected static void drawArrowhead(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
         int arrowLength = 18;
         int arrowWidth = 12;
 
