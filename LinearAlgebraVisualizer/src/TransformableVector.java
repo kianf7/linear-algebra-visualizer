@@ -6,13 +6,29 @@ public class TransformableVector extends DrawableVector implements Transformable
         super(x, y, color, name);
     }
 
+    public boolean transformationIsZero(Graphics2D g, Matrix2D transformation, int originX, int originY) {
+        if (transformation.isZero()) {
+            g.fillOval(originX - 4, originY - 4, 8, 8);
+            g.setFont(new Font("Arial", Font.PLAIN, 14));
+            g.setColor(Color.white);
+            g.drawString(getName(), originX + 5, originY - 5);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
 
-        Stroke oldStroke = prepare(g, windowWidth, windowHeight);
+        Stroke oldStroke = prepare(g, originX, originY);
         if (oldStroke == null) return;
+
+        if (transformationIsZero(g, transformation, originX, originY)) {
+            return;
+        }
 
         Vector2D transformedVector = transformation.transformVector(this);
         int transformedEndX = calculateEndX(originX, transformedVector.getX(), scale);
@@ -38,8 +54,28 @@ public class TransformableVector extends DrawableVector implements Transformable
         return (int) (originY - transformedY * scale);
     }
 
-    @Override
-    public void drawUnlockedFromOrigin (Graphics2D g, int newOriginX, int newOriginY, int scale) {
-        //TODO
+    public void drawUnlockedFromOrigin (Graphics2D g, int newOriginX, int newOriginY, int scale, Matrix2D transformation) {
+        Stroke oldStroke = g.getStroke();
+        if (isZero()) {
+            g.setColor(getColor());
+            g.fillOval(newOriginX - 4, newOriginY - 4, 8, 8);
+            g.setFont(new Font("Arial", Font.PLAIN, 14));
+            g.setColor(Color.white);
+            g.drawString(getName(), newOriginX + 5, newOriginY - 5);
+            return;
+        }
+
+        Vector2D transformedVector = transformation.transformVector(this);
+        int transformedEndX = (int) (newOriginX + transformedVector.getX() * scale);
+        int transformedEndY = (int) (newOriginY - transformedVector.getY() * scale);
+
+        drawLine(g, newOriginX, newOriginY, transformedEndX,transformedEndY, getColor());
+        drawArrowhead(g, newOriginX, newOriginY, transformedEndX, transformedEndY, getColor());
+
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
+        g.setColor(Color.white);
+        g.drawString(getName() ,transformedEndX - 10, transformedEndY + 5);
+
+        g.setStroke(oldStroke);
     }
 }

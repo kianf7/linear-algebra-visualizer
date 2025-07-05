@@ -20,8 +20,8 @@ public class Vector2D{
         return new Vector2D(v1.getX()+ v2.getX(), v1.getY() + v2.getY());
     }
 
-    public static boolean isNull(final Vector2D vector) {
-        return vector.getX() == 0 && vector.getY() == 0;
+    public boolean isZero() {
+        return getX() == 0 && getY() == 0;
     }
 
 }

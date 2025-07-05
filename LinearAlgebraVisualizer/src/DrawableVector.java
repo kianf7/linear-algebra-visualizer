@@ -24,8 +24,12 @@ public class DrawableVector extends Vector2D implements Drawable {
     }
 
     protected Stroke prepare(Graphics2D g, int originX, int originY) {
-        if (Vector2D.isNull(this)) {
+        if (isZero()) {
+            g.setColor(color);
             g.fillOval(originX - 4, originY - 4, 8, 8);
+            g.setFont(new Font("Arial", Font.PLAIN, 14));
+            g.setColor(Color.white);
+            g.drawString(name, originX + 5, originY - 5);
             return null;
         }
         return g.getStroke();
@@ -36,7 +40,7 @@ public class DrawableVector extends Vector2D implements Drawable {
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
 
-        Stroke oldStroke = prepare(g, windowWidth, windowHeight);
+        Stroke oldStroke = prepare(g, originX, originY);
         if (oldStroke == null) return;
 
         int endX = calculateEndX(originX, scale);

@@ -20,7 +20,7 @@ public class GUIController {
     public void initializeListeners() {
         //TODO: add all elements that have a listener
 
-        components.showVectorButton().addActionListener(e -> {
+        components.showVectorButton().addActionListener(_ -> {
             try {
                 if (vectorManager.getDrawingMode() != DrawingMode.NORMAL) {
                     vectorManager.setDrawingMode(DrawingMode.NORMAL);
@@ -43,7 +43,7 @@ public class GUIController {
             }
         });
 
-        components.vectorColorButton().addActionListener(e -> {
+        components.vectorColorButton().addActionListener(_ -> {
             Color chosen = JColorChooser.showDialog(gui, "Choose color", Color.white);
             if (chosen != null) {
                 components.colorPreview().setBackground(chosen);
@@ -52,7 +52,7 @@ public class GUIController {
 
         });
 
-        components.removeLastVectorButton().addActionListener(e -> {
+        components.removeLastVectorButton().addActionListener(_ -> {
             if (vectorManager.removeVector() == -1) {
                 JOptionPane.showMessageDialog(gui,"No vector to remove!");
             }
@@ -60,7 +60,7 @@ public class GUIController {
             gui.repaint();
         });
 
-        components.transformationSlider().addChangeListener(e -> {
+        components.transformationSlider().addChangeListener(_ -> {
             int value = components.transformationSlider().getValue();
             double t = value / 1000.0;
 
@@ -69,7 +69,7 @@ public class GUIController {
             gui.repaint();
         });
 
-        components.sumVectorsButton().addActionListener(e -> {
+        components.sumVectorsButton().addActionListener(_ -> {
             if (vectorManager.getDrawingMode() != DrawingMode.SUM) {
                 vectorManager.setDrawingMode(DrawingMode.SUM);
                 gui.repaint();

@@ -1,10 +1,11 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class VectorManager implements Transformable{
-    private final ArrayList<DrawableVector> inputVectors = new ArrayList<DrawableVector>();
-    private int vectorAmount = 0;
-    private Color currentColor = Color.white;
+//TODO: Maybe make generic <T extends DrawableVector>
+public class VectorManager implements Transformable {
+    private final ArrayList<DrawableVector> inputVectors = new ArrayList<>();
+    private final Color STANDARD_COLOR = Color.white;
+    private Color currentColor = STANDARD_COLOR;
     private DrawingMode drawingMode;
 
     public VectorManager() {
@@ -19,7 +20,7 @@ public class VectorManager implements Transformable{
     }
 
     public int getVectorAmount() {
-        return vectorAmount;
+        return inputVectors.size();
     }
 
     public void setCurrentColor(Color newColor) {
@@ -28,7 +29,6 @@ public class VectorManager implements Transformable{
     public void addVector(DrawableVector newVector) {
         newVector.setColor(currentColor);
         inputVectors.add(newVector);
-        vectorAmount += 1;
     }
 
     public int removeVector() {
@@ -36,7 +36,6 @@ public class VectorManager implements Transformable{
             return -1;
         } else {
             inputVectors.removeLast();
-            vectorAmount -= 1;
             return 0;
         }
     }
@@ -51,31 +50,36 @@ public class VectorManager implements Transformable{
         }
     }
 
-    public void drawSum(Graphics2D g, int windowWidth, int windowHeight, int scale) {
-        double sumX = 0;
-        double sumY = 0;
+    public void drawSum(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
+        if (inputVectors.isEmpty()) return;
+
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
 
-        if (inputVectors.isEmpty()) {
-            return;
-        }
-        int startX = originX;
-        int startY = originY;
-        for (DrawableVector v : inputVectors) {
-            if (inputVectors.size() == 1) {
-                v.draw(g, windowWidth, windowHeight, scale);
-                return;
-            }
-            v.drawUnlockedFromOrigin(g, startX, startY, scale);
+        double currentX = 0;
+        double currentY = 0;
 
-            startX = v.calculateEndX(startX, scale);
-            startY = v.calculateEndY(startY,scale);
+        int newOriginX = originX;
+        int newOriginY = originY;
 
-            sumX += v.getX();
-            sumY += v.getY();
+        for (DrawableVector inputVector : inputVectors) {
+            TransformableVector v = (TransformableVector) inputVector;
+
+            double nextX = currentX + v.getX();
+            double nextY = currentY + v.getY();
+
+            v.drawUnlockedFromOrigin(g, newOriginX, newOriginY, scale, transformation);
+
+            currentX = nextX;
+            currentY = nextY;
+
+            Vector2D transformed = transformation.transformVector(new Vector2D(currentX, currentY));
+            newOriginX = (int) (originX + transformed.getX() * scale);
+            newOriginY = (int) (originY - transformed.getY() * scale);
         }
-        DrawableVector sum = new DrawableVector(sumX,sumY,Color.blue,"sum");
-        sum.draw(g,windowWidth,windowHeight,scale);
+
+        TransformableVector sum = new TransformableVector(currentX, currentY, Color.BLUE, "sum");
+        sum.draw(g, windowWidth, windowHeight, scale, transformation);
     }
+
 }

@@ -44,7 +44,7 @@ public class GUI extends JPanel {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
         }
         else if (vectorManager.getDrawingMode() == DrawingMode.SUM) {
-            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale);
+            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
         }
 
 

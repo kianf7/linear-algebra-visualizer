@@ -39,6 +39,7 @@ public class Matrix2D {
         return new Matrix2D(1,0,0,1);
     }
 
+    //TODO: Make not-static
     public static Matrix2D interpolate(Matrix2D in, Matrix2D out, double t) {
         double a = (1 - t) * in.getA() + t * out.getA();
         double b = (1 - t) * in.getB() + t * out.getB();
@@ -46,5 +47,9 @@ public class Matrix2D {
         double d = (1 - t) * in.getD() + t * out.getD();
 
         return new Matrix2D(a,b,c,d);
+    }
+
+    public boolean isZero() {
+        return a == 0 && b == 0 && c == 0 && d == 0;
     }
 }
