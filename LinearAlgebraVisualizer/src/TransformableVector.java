@@ -46,14 +46,6 @@ public class TransformableVector extends DrawableVector implements Transformable
 
     }
 
-    public int calculateEndX (int originX, double transformedX, int scale) {
-        return (int) (originX + transformedX * scale);
-    }
-
-    public int calculateEndY (int originY, double transformedY, int scale) {
-        return (int) (originY - transformedY * scale);
-    }
-
     public void drawUnlockedFromOrigin (Graphics2D g, int newOriginX, int newOriginY, int scale, Matrix2D transformation) {
         Stroke oldStroke = g.getStroke();
         if (isZero()) {
@@ -66,8 +58,8 @@ public class TransformableVector extends DrawableVector implements Transformable
         }
 
         Vector2D transformedVector = transformation.transformVector(this);
-        int transformedEndX = (int) (newOriginX + transformedVector.getX() * scale);
-        int transformedEndY = (int) (newOriginY - transformedVector.getY() * scale);
+        int transformedEndX = calculateEndX(newOriginX, transformedVector.getX(), scale);
+        int transformedEndY = calculateEndY(newOriginY, transformedVector.getY(), scale);
 
         drawLine(g, newOriginX, newOriginY, transformedEndX,transformedEndY, getColor());
         drawArrowhead(g, newOriginX, newOriginY, transformedEndX, transformedEndY, getColor());
@@ -77,5 +69,13 @@ public class TransformableVector extends DrawableVector implements Transformable
         g.drawString(getName() ,transformedEndX - 10, transformedEndY + 5);
 
         g.setStroke(oldStroke);
+    }
+
+    public int calculateEndX (int originX, double transformedX, int scale) {
+        return (int) (originX + transformedX * scale);
+    }
+
+    public int calculateEndY (int originY, double transformedY, int scale) {
+        return (int) (originY - transformedY * scale);
     }
 }
