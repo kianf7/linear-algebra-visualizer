@@ -6,6 +6,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
     public TransformableGrid(int MAX_GRID_LINES) {
         this.MAX_GRID_LINES = MAX_GRID_LINES;
     }
+
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
         int originX = windowWidth / 2;
@@ -68,8 +69,6 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
         int originX = windowWidth / 2;
         int originY = windowHeight / 2;
 
-
-        //Starting points for the grid
         int startX = originX % scale;
         int startY = originY % scale;
 

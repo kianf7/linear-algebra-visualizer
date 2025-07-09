@@ -46,15 +46,15 @@ public class TransformableVector extends DrawableVector implements Transformable
 
     }
 
-    public int calculateEndX (int originX, double transformedX, int scale) {
+    public static int calculateEndX (int originX, double transformedX, int scale) {
         return (int) (originX + transformedX * scale);
     }
 
-    public int calculateEndY (int originY, double transformedY, int scale) {
+    public static int calculateEndY (int originY, double transformedY, int scale) {
         return (int) (originY - transformedY * scale);
     }
 
-    public void drawUnlockedFromOrigin (Graphics2D g, int newOriginX, int newOriginY, int scale, Matrix2D transformation) {
+    public void drawUnlockedFromOrigin (Graphics2D g, int newOriginX, int newOriginY, int scale, Matrix2D transformation, boolean hasHead) {
         Stroke oldStroke = g.getStroke();
         if (isZero()) {
             g.setColor(getColor());
@@ -70,7 +70,9 @@ public class TransformableVector extends DrawableVector implements Transformable
         int transformedEndY = (int) (newOriginY - transformedVector.getY() * scale);
 
         drawLine(g, newOriginX, newOriginY, transformedEndX,transformedEndY, getColor());
-        drawArrowhead(g, newOriginX, newOriginY, transformedEndX, transformedEndY, getColor());
+        if (hasHead) {
+            drawArrowhead(g, newOriginX, newOriginY, transformedEndX, transformedEndY, getColor());
+        }
 
         g.setFont(new Font("Arial", Font.PLAIN, 14));
         g.setColor(Color.white);

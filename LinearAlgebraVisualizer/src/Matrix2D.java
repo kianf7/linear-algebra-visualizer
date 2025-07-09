@@ -23,12 +23,6 @@ public class Matrix2D {
         return d;
     }
 
-    public void setA(double a) { this.a = a;}
-    public void setB(double b) { this.b = b;}
-    public void setC(double c) { this.c = c;}
-    public void setD(double d) { this.d = d;}
-
-
     public Vector2D transformVector(Vector2D v) {
         double transformedX = a * v.getX() + b * v.getY();
         double transformedY = c * v.getX() + d * v.getY();
@@ -47,6 +41,10 @@ public class Matrix2D {
         double d = (1 - t) * in.getD() + t * out.getD();
 
         return new Matrix2D(a,b,c,d);
+    }
+
+    public double determinant() {
+        return a * d - b * c;
     }
 
     public boolean isZero() {

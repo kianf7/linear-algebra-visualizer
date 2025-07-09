@@ -37,14 +37,18 @@ public class GUI extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         //TODO add everything that should be drawn
-        gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
+        gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
+
+        if (!matrixManager.getHideDet()) {
+            matrixManager.drawDeterminant(g2d,getWidth(),getHeight(),scale);
+        }
 
         //TODO: Maybe add switch case for different modes
         if (vectorManager.getDrawingMode() == DrawingMode.NORMAL) {
-            vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
+            vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
         }
         else if (vectorManager.getDrawingMode() == DrawingMode.SUM) {
-            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale, matrixManager.getTransformation());
+            vectorManager.drawSum(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
         }
 
 
@@ -97,14 +101,55 @@ public class GUI extends JPanel {
         inputPanel2.add(new JLabel("Transformation:"));
         inputPanel2.add(transformationSlider);
 
+        // ///////////
+        JTextField matrixFieldA = new JTextField(3);
+        JTextField matrixFieldB = new JTextField(3);
+        JTextField matrixFieldC = new JTextField(3);
+        JTextField matrixFieldD = new JTextField(3);
+        matrixFieldA.setText("1");
+        matrixFieldB.setText("0");
+        matrixFieldC.setText("0");
+        matrixFieldD.setText("1");
+
+        JPanel matrixGrid = new JPanel(new GridLayout(2,2,5,5));
+        matrixGrid.setMaximumSize(new Dimension(200, 2000));
+        matrixGrid.setBorder(BorderFactory.createTitledBorder("Matrix (2×2)"));
+        matrixGrid.add(matrixFieldA);
+        matrixGrid.add(matrixFieldB);
+        matrixGrid.add(matrixFieldC);
+        matrixGrid.add(matrixFieldD);
+
+        JButton setMatrixButton = new JButton("Set Matrix");
+
+        JPanel matrixPanel = new JPanel();
+        matrixPanel.setLayout(new BoxLayout(matrixPanel, BoxLayout.Y_AXIS));
+        JCheckBox hideDetBox = new JCheckBox();
+        JLabel hideDetLabel = new JLabel("Hide Determinant: ");
+        JPanel hideDeterminant = new JPanel();
+        hideDeterminant.add(hideDetLabel);
+        hideDeterminant.add(hideDetBox);
+
+        matrixGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setMatrixButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hideDeterminant.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        matrixPanel.add(Box.createRigidArea(new Dimension(0, 200)));
+        matrixPanel.add(matrixGrid);
+        matrixPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        matrixPanel.add(setMatrixButton);
+        matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        matrixPanel.add(hideDeterminant);
+
+
         //TODO: Add all GUI components with an action to class GUIComponents and here
-        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton);
+        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton, matrixFieldA, matrixFieldB, matrixFieldC, matrixFieldD, setMatrixButton, hideDetBox);
 
         new GUIController(testGui,components);
         frame.setLayout(new BorderLayout());
         frame.add(testGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(inputPanel2, BorderLayout.SOUTH);
+        frame.add(matrixPanel, BorderLayout.EAST);
         frame.setSize(800,600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

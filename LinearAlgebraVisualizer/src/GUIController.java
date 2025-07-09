@@ -6,7 +6,6 @@ public class GUIController {
     private final VectorManager vectorManager;
     private final GUIComponents components;
     private final MatrixManager matrixManager;
-    private final Matrix2D testTransformation = new Matrix2D(-5,3,-2,5); //This will later be input over gui
 
     public GUIController(GUI gui, GUIComponents components) {
         this.gui = gui;
@@ -64,8 +63,8 @@ public class GUIController {
             int value = components.transformationSlider().getValue();
             double t = value / 1000.0;
 
-            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), testTransformation, t);
-            matrixManager.setTransformation(interpolated);
+            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), matrixManager.getTarget(), t);
+            matrixManager.setInterpolated(interpolated);
             gui.repaint();
         });
 
@@ -86,6 +85,30 @@ public class GUIController {
                 gui.setScale(newScale);
                 gui.repaint();
             }
+        });
+
+        components.setMatrixButton().addActionListener(e -> {
+            try {
+                double inputA = Double.parseDouble(components.matrixFieldA().getText());
+                double inputB = Double.parseDouble(components.matrixFieldB().getText());
+                double inputC = Double.parseDouble(components.matrixFieldC().getText());
+                double inputD = Double.parseDouble(components.matrixFieldD().getText());
+
+                Matrix2D target = new Matrix2D(inputA,inputB,inputC,inputD);
+                matrixManager.setTarget(target);
+                matrixManager.setInterpolated(Matrix2D.identity());
+                components.transformationSlider().setValue(0);
+
+                gui.repaint();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gui,"Invalid Matrix!");
+            }
+        });
+
+        components.hideDetBox().addActionListener(e -> {
+            boolean hideDet = components.hideDetBox().isSelected();
+            matrixManager.setHideDet(hideDet);
+            gui.repaint();
         });
 
         gui.setVectorManager(vectorManager);

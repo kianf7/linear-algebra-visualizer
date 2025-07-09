@@ -68,7 +68,7 @@ public class VectorManager implements Transformable {
             double nextX = currentX + v.getX();
             double nextY = currentY + v.getY();
 
-            v.drawUnlockedFromOrigin(g, newOriginX, newOriginY, scale, transformation);
+            v.drawUnlockedFromOrigin(g, newOriginX, newOriginY, scale, transformation, true);
 
             currentX = nextX;
             currentY = nextY;

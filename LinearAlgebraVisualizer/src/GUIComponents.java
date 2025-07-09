@@ -9,5 +9,11 @@ public record GUIComponents (
         JPanel colorPreview,
         JButton removeLastVectorButton,
         JSlider transformationSlider,
-        JButton sumVectorsButton
+        JButton sumVectorsButton,
+        JTextField matrixFieldA,
+        JTextField matrixFieldB,
+        JTextField matrixFieldC,
+        JTextField matrixFieldD,
+        JButton setMatrixButton,
+        JCheckBox hideDetBox
 ) {}

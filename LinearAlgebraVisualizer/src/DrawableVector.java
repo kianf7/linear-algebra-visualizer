@@ -23,6 +23,10 @@ public class DrawableVector extends Vector2D implements Drawable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     protected Stroke prepare(Graphics2D g, int originX, int originY) {
         if (isZero()) {
             g.setColor(color);
