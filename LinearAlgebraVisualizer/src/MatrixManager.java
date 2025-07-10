@@ -1,9 +1,14 @@
 import java.awt.*;
 
 public class MatrixManager {
-    private Matrix2D interpolated = Matrix2D.identity();
-    private Matrix2D target = Matrix2D.identity();
+    private Matrix2D spaceBasis = Matrix2D.identity();
+    private Matrix2D interpolated = spaceBasis;
+    private Matrix2D target = spaceBasis;
     private boolean hideDet;
+    private boolean hideBasisVectors;
+    private final Color niceBlue = new Color(128, 128, 255);
+    private final Color detFill = new Color(100,100,255,100);
+    private final Color detFillNeg = new Color(200,50,255,90);
 
     public MatrixManager() {
     }
@@ -32,9 +37,32 @@ public class MatrixManager {
         return hideDet;
     }
 
+    public void setSpaceBasis(Matrix2D spaceBasis) {
+        this.spaceBasis = spaceBasis;
+    }
+
+    public Matrix2D getSpaceBasis() {
+        return spaceBasis;
+    }
+
+    public void setHideBasisVectors(boolean hideBasisVectors) {
+        this.hideBasisVectors = hideBasisVectors;
+    }
+
+    public boolean getHideBasisVectors() {
+        return hideBasisVectors;
+    }
+
     public void drawDeterminant(Graphics2D g, int windowWidth, int windowHeight, int scale) {
         if (interpolated.determinant() == 0) {
             return;
+        }
+
+        Color determinantFillColor;
+        if (interpolated.determinant() > 0) {
+            determinantFillColor = detFill;
+        } else {
+            determinantFillColor = detFillNeg;
         }
 
         int originX = windowWidth / 2;
@@ -44,8 +72,8 @@ public class MatrixManager {
         Vector2D j = interpolated.transformVector(new Vector2D(0,1));
 
 
-        TransformableVector iDraw = new TransformableVector(1,0,Color.yellow,"");
-        TransformableVector jDraw = new TransformableVector(0,1,Color.yellow,"");
+        TransformableVector iDraw = new TransformableVector(1,0,niceBlue,"");
+        TransformableVector jDraw = new TransformableVector(0,1,niceBlue,"");
 
         iDraw.drawUnlockedFromOrigin(g,originX,originY,scale,interpolated,false);
         jDraw.drawUnlockedFromOrigin(g,originX,originY,scale,interpolated,false);
@@ -68,18 +96,22 @@ public class MatrixManager {
         parallelogram.addPoint(endPointX,endPointY);
         parallelogram.addPoint(J_nextStartingX,J_nextStartingY);
 
-        Color transparentYellow = new Color(255, 255, 0, 80);
-        g.setColor(transparentYellow);
+
+        g.setColor(determinantFillColor);
         g.fill(parallelogram);
 
-        g.setColor(Color.yellow);
+        g.setColor(Color.LIGHT_GRAY);
         double determinant = interpolated.determinant();
+        g.setFont(new Font("Arial", Font.BOLD, 15));
         String formattedDeterminant = String.format("%.2f", determinant);
 
-        g.drawString("Det: " + formattedDeterminant, endPointX , endPointY -5);
+        g.drawString("Det: " + formattedDeterminant, endPointX + 1, endPointY - 5);
+    }
 
-        iDraw.setColor(Color.green);
-        jDraw.setColor(Color.red);
+    public void drawBasisVectors(Graphics2D g, int windowWidth, int windowHeight, int scale) {
+
+        TransformableVector iDraw = new TransformableVector(1,0,Color.green,"");
+        TransformableVector jDraw = new TransformableVector(0,1,Color.red,"");
 
         iDraw.draw(g,windowWidth,windowHeight,scale,interpolated);
         jDraw.draw(g,windowWidth,windowHeight,scale,interpolated);

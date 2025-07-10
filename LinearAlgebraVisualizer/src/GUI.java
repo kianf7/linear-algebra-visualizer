@@ -8,7 +8,7 @@ public class GUI extends JPanel {
     private MatrixManager matrixManager;
     TransformableGrid gridTest = new TransformableGrid(30);
 
-    GUI(int scale) {
+    public GUI(int scale) {
         setBackground(Color.BLACK);
         this.scale = scale;
     }
@@ -41,6 +41,10 @@ public class GUI extends JPanel {
 
         if (!matrixManager.getHideDet()) {
             matrixManager.drawDeterminant(g2d,getWidth(),getHeight(),scale);
+        }
+
+        if (!matrixManager.getHideBasisVectors()) {
+            matrixManager.drawBasisVectors(g2d,getWidth(),getHeight(),scale);
         }
 
         //TODO: Maybe add switch case for different modes
@@ -79,6 +83,7 @@ public class GUI extends JPanel {
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JButton removeLastVectorButton = new JButton("Remove last vector");
         JButton sumVectorsButton = new JButton("Sum Vectors");
+        sumVectorsButton.setToolTipText("Sums up all the vectors");
 
 
         JPanel inputPanel = new JPanel();
@@ -101,48 +106,93 @@ public class GUI extends JPanel {
         inputPanel2.add(new JLabel("Transformation:"));
         inputPanel2.add(transformationSlider);
 
-        // ///////////
-        JTextField matrixFieldA = new JTextField(3);
-        JTextField matrixFieldB = new JTextField(3);
-        JTextField matrixFieldC = new JTextField(3);
-        JTextField matrixFieldD = new JTextField(3);
-        matrixFieldA.setText("1");
-        matrixFieldB.setText("0");
-        matrixFieldC.setText("0");
-        matrixFieldD.setText("1");
+        //Transformation-Matrix////////////////////////////////////////////////////////////////
+        JTextField transformationFieldA = new JTextField(3);
+        JTextField transformationFieldB = new JTextField(3);
+        JTextField transformationFieldC = new JTextField(3);
+        JTextField transformationFieldD = new JTextField(3);
+        transformationFieldA.setText("1");
+        transformationFieldB.setText("0");
+        transformationFieldC.setText("0");
+        transformationFieldD.setText("1");
 
-        JPanel matrixGrid = new JPanel(new GridLayout(2,2,5,5));
-        matrixGrid.setMaximumSize(new Dimension(200, 2000));
-        matrixGrid.setBorder(BorderFactory.createTitledBorder("Matrix (2×2)"));
-        matrixGrid.add(matrixFieldA);
-        matrixGrid.add(matrixFieldB);
-        matrixGrid.add(matrixFieldC);
-        matrixGrid.add(matrixFieldD);
+        JPanel transformationInputGrid = new JPanel(new GridLayout(2,2,5,5));
+        transformationInputGrid.setMaximumSize(new Dimension(200, 100));
+        transformationInputGrid.setBorder(BorderFactory.createTitledBorder("Transformation"));
+        transformationInputGrid.add(transformationFieldA);
+        transformationInputGrid.add(transformationFieldB);
+        transformationInputGrid.add(transformationFieldC);
+        transformationInputGrid.add(transformationFieldD);
 
-        JButton setMatrixButton = new JButton("Set Matrix");
+        JButton setTransformationButton = new JButton("Set Transformation");
+        //x////////////////////////////////////////////////////////////////////////////////////////
 
-        JPanel matrixPanel = new JPanel();
-        matrixPanel.setLayout(new BoxLayout(matrixPanel, BoxLayout.Y_AXIS));
+        //Space-Basis-Matrix///////////////////////////////////////////////////////////////////////
+        JTextField basisFieldA = new JTextField(3);
+        JTextField basisFieldB = new JTextField(3);
+        JTextField basisFieldC = new JTextField(3);
+        JTextField basisFieldD = new JTextField(3);
+        basisFieldA.setText("1");
+        basisFieldB.setText("0");
+        basisFieldC.setText("0");
+        basisFieldD.setText("1");
+
+        JPanel basisGrid = new JPanel(new GridLayout(2,2,5,5));
+        basisGrid.setMaximumSize(new Dimension(200,100));
+        basisGrid.setBorder(BorderFactory.createTitledBorder("Space-Basis"));
+        basisGrid.add(basisFieldA);
+        basisGrid.add(basisFieldB);
+        basisGrid.add(basisFieldC);
+        basisGrid.add(basisFieldD);
+
+        JButton setBasisButton = new JButton("Set Basis");
+
+
+
         JCheckBox hideDetBox = new JCheckBox();
-        JLabel hideDetLabel = new JLabel("Hide Determinant: ");
+        JLabel hideDetLabel = new JLabel("Hide Determinant:");
         JPanel hideDeterminant = new JPanel();
+        hideDeterminant.setMaximumSize(new Dimension(200,30));
         hideDeterminant.add(hideDetLabel);
         hideDeterminant.add(hideDetBox);
 
-        matrixGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
-        setMatrixButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        hideDeterminant.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JCheckBox hideBasisVecBox = new JCheckBox();
+        JLabel hideBasisVecLabel = new JLabel("Hide Basis-Vectors:");
+        JPanel hideBasisVec = new JPanel();
+        hideBasisVec.setMaximumSize(new Dimension(200,30));
+        hideBasisVec.add(hideBasisVecLabel);
+        hideBasisVec.add(hideBasisVecBox);
 
-        matrixPanel.add(Box.createRigidArea(new Dimension(0, 200)));
-        matrixPanel.add(matrixGrid);
+        transformationInputGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setTransformationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hideDeterminant.setAlignmentX(Component.CENTER_ALIGNMENT);
+        basisGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setBasisButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hideBasisVec.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel matrixPanel = new JPanel();
+        matrixPanel.setLayout(new BoxLayout(matrixPanel, BoxLayout.Y_AXIS));
+        matrixPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        matrixPanel.add(transformationInputGrid);
         matrixPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        matrixPanel.add(setMatrixButton);
+        matrixPanel.add(setTransformationButton);
         matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
         matrixPanel.add(hideDeterminant);
+        matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        matrixPanel.add(basisGrid);
+        matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        matrixPanel.add(setBasisButton);
+        matrixPanel.add(hideBasisVec);
+
 
 
         //TODO: Add all GUI components with an action to class GUIComponents and here
-        GUIComponents components = new GUIComponents(showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton, matrixFieldA, matrixFieldB, matrixFieldC, matrixFieldD, setMatrixButton, hideDetBox);
+        GUIComponents components = new GUIComponents(
+                showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton,
+                transformationFieldA, transformationFieldB, transformationFieldC, transformationFieldD, setTransformationButton, hideDetBox,
+                basisFieldA, basisFieldB, basisFieldC, basisFieldD, setBasisButton, hideBasisVecBox
+
+        );
 
         new GUIController(testGui,components);
         frame.setLayout(new BorderLayout());

@@ -17,7 +17,7 @@ public class GUIController {
 
 
     public void initializeListeners() {
-        //TODO: add all elements that have a listener
+        //TODO: add all listeners
 
         components.showVectorButton().addActionListener(_ -> {
             try {
@@ -63,7 +63,7 @@ public class GUIController {
             int value = components.transformationSlider().getValue();
             double t = value / 1000.0;
 
-            Matrix2D interpolated = Matrix2D.interpolate(Matrix2D.identity(), matrixManager.getTarget(), t);
+            Matrix2D interpolated = Matrix2D.interpolate(matrixManager.getSpaceBasis(), matrixManager.getTarget(), t);
             matrixManager.setInterpolated(interpolated);
             gui.repaint();
         });
@@ -87,16 +87,16 @@ public class GUIController {
             }
         });
 
-        components.setMatrixButton().addActionListener(e -> {
+        components.setTransformationButton().addActionListener(_ -> {
             try {
-                double inputA = Double.parseDouble(components.matrixFieldA().getText());
-                double inputB = Double.parseDouble(components.matrixFieldB().getText());
-                double inputC = Double.parseDouble(components.matrixFieldC().getText());
-                double inputD = Double.parseDouble(components.matrixFieldD().getText());
+                double inputA = Double.parseDouble(components.transformationFieldA().getText());
+                double inputB = Double.parseDouble(components.transformationFieldB().getText());
+                double inputC = Double.parseDouble(components.transformationFieldC().getText());
+                double inputD = Double.parseDouble(components.transformationFieldD().getText());
 
                 Matrix2D target = new Matrix2D(inputA,inputB,inputC,inputD);
                 matrixManager.setTarget(target);
-                matrixManager.setInterpolated(Matrix2D.identity());
+                matrixManager.setInterpolated(matrixManager.getSpaceBasis());
                 components.transformationSlider().setValue(0);
 
                 gui.repaint();
@@ -105,11 +105,42 @@ public class GUIController {
             }
         });
 
-        components.hideDetBox().addActionListener(e -> {
+        components.hideDetBox().addActionListener(_ -> {
             boolean hideDet = components.hideDetBox().isSelected();
             matrixManager.setHideDet(hideDet);
             gui.repaint();
         });
+
+        components.setBasisButton().addActionListener(_ -> {
+            try {
+                double inputA = Double.parseDouble(components.basisFieldA().getText());
+                double inputB = Double.parseDouble(components.basisFieldB().getText());
+                double inputC = Double.parseDouble(components.basisFieldC().getText());
+                double inputD = Double.parseDouble(components.basisFieldD().getText());
+
+                Matrix2D newBasis = new Matrix2D(inputA, inputB, inputC, inputD);
+
+                if (newBasis.determinant() == 0) {
+                    JOptionPane.showMessageDialog(gui,"Basis must have Dimension 2 !");
+                } else {
+                    matrixManager.setSpaceBasis(newBasis);
+                    components.transformationSlider().setValue(1);
+                    components.transformationSlider().setValue(0);
+                    gui.repaint();
+                }
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gui, "Invalid Input!");
+            }
+        });
+
+        components.hideBasisVecBox().addActionListener(_ -> {
+            boolean hideBasis = components.hideBasisVecBox().isSelected();
+            matrixManager.setHideBasisVectors(hideBasis);
+            gui.repaint();
+        });
+
+
 
         gui.setVectorManager(vectorManager);
         gui.setMatrixManager(matrixManager);

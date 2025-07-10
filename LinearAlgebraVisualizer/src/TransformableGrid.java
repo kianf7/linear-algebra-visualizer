@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class TransformableGrid extends CoordinateGrid implements Transformable{
     private final int MAX_GRID_LINES;
+    private final Color NICE_BLUE = new Color(156,156,255);
 
     public TransformableGrid(int MAX_GRID_LINES) {
         this.MAX_GRID_LINES = MAX_GRID_LINES;
@@ -29,7 +30,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
             if (currentX == 0) {
                 g.setColor(Color.white);
             } else {
-                g.setColor(Color.cyan);
+                g.setColor(NICE_BLUE);
             }
             Vector2D top = new Vector2D(currentX, MAX_GRID_LINES);
             Vector2D bottom = new Vector2D(currentX, -MAX_GRID_LINES);
@@ -44,7 +45,7 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
             if (currentY == 0) {
                 g.setColor(Color.white);
             } else {
-                g.setColor(Color.cyan);
+                g.setColor(NICE_BLUE);
             }
             Vector2D right = new Vector2D(MAX_GRID_LINES, currentY);
             Vector2D left = new Vector2D(-MAX_GRID_LINES, currentY);

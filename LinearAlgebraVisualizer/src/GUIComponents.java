@@ -10,10 +10,16 @@ public record GUIComponents (
         JButton removeLastVectorButton,
         JSlider transformationSlider,
         JButton sumVectorsButton,
-        JTextField matrixFieldA,
-        JTextField matrixFieldB,
-        JTextField matrixFieldC,
-        JTextField matrixFieldD,
-        JButton setMatrixButton,
-        JCheckBox hideDetBox
+        JTextField transformationFieldA,
+        JTextField transformationFieldB,
+        JTextField transformationFieldC,
+        JTextField transformationFieldD,
+        JButton setTransformationButton,
+        JCheckBox hideDetBox,
+        JTextField basisFieldA,
+        JTextField basisFieldB,
+        JTextField basisFieldC,
+        JTextField basisFieldD,
+        JButton setBasisButton,
+        JCheckBox hideBasisVecBox
 ) {}

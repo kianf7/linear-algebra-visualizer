@@ -1,6 +1,6 @@
 public class Matrix2D {
 
-    private double a,b,c,d;
+    private final double a,b,c,d;
     // M = a, b
     //     c, d
     public Matrix2D(double a, double b, double c, double d) {
@@ -30,17 +30,22 @@ public class Matrix2D {
     }
 
     public static Matrix2D identity() {
-        return new Matrix2D(1,0,0,1);
+        return new Matrix2D(1, 0, 0, 1);
     }
 
-    //TODO: Make not-static
-    public static Matrix2D interpolate(Matrix2D in, Matrix2D out, double t) {
-        double a = (1 - t) * in.getA() + t * out.getA();
-        double b = (1 - t) * in.getB() + t * out.getB();
-        double c = (1 - t) * in.getC() + t * out.getC();
-        double d = (1 - t) * in.getD() + t * out.getD();
+    //Works somehow
+    public static Matrix2D interpolate(Matrix2D m1, Matrix2D m2, double t) {
+        double a = m1.getA() * m2.getA() + m1.getB() * m2.getC();
+        double b = m1.getA() * m2.getB() + m1.getB() * m2.getD();
+        double c = m1.getC() * m2.getA() + m1.getD() * m2.getC();
+        double d = m1.getC() * m2.getB() + m1.getD() * m2.getD();
 
-        return new Matrix2D(a,b,c,d);
+        double interpolatedA = (1 - t) * m1.getA() + t * a;
+        double interpolatedB = (1 - t) * m1.getB() + t * b;
+        double interpolatedC = (1 - t) * m1.getC() + t * c;
+        double interpolatedD = (1 - t) * m1.getD() + t * d;
+
+        return new Matrix2D(interpolatedA, interpolatedB, interpolatedC, interpolatedD);
     }
 
     public double determinant() {
