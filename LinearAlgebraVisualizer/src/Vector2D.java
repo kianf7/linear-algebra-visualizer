@@ -1,4 +1,6 @@
-
+/**
+ * {@code Vector2D} is a basic 2d-vector with useful operations.
+ */
 public class Vector2D {
     private final double x,y;
 

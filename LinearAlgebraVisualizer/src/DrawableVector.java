@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+/**
+ * {@code DrawableVector} extends {@code Vector2D} by being drawable. Implements {@code Drawable}
+ */
+
 public class DrawableVector extends Vector2D implements Drawable {
     private Color color;
     private String name;

@@ -1,8 +1,9 @@
-public class Matrix2D {
+/**
+ * {@code Matrix2D} represents a 2x2 matrix and provides useful operations.
+ */
 
+public class Matrix2D {
     private final double a,b,c,d;
-    // M = a, b
-    //     c, d
     public Matrix2D(double a, double b, double c, double d) {
         this.a = a;
         this.b = b;
@@ -64,19 +65,7 @@ public class Matrix2D {
         return a * d - b * c;
     }
 
-    public Matrix2D getInverse() {
-        double det = getDeterminant();
-        if (det == 0 ) {
-            return null;
-        }
-
-        double invA = d / det;
-        double invB = -b / det;
-        double invC = -c / det;
-        double invD = a / det;
-
-        return new Matrix2D(invA,invB,invC,invD);
-    }
+    //Following is based on Mathe2-Skript
 
     //For 2x2 matrices you get the polynomial t^2 - (a + d)t + (ad - bc)
     public double[] getEigenvalues() {
@@ -102,6 +91,7 @@ public class Matrix2D {
         double m10 = c;
         double m11 = d - lambda;
 
+        //Cant use 0 because of graphical bugs
         if (Math.abs(m00) > 1e-10 || Math.abs(m01) > 1e-10) {
             return new Vector2D(-m01, m00).normalize();
         } else if (Math.abs(m10) > 1e-10 || Math.abs(m11) > 1e-10) {

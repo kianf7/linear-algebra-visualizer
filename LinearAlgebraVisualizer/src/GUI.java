@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 
+/**
+ * {@code GUI} calls all drawing methods and can be run.
+ */
+
 public class GUI extends JPanel {
     private int scale;
     private VectorManager vectorManager;
     private MatrixManager matrixManager;
-    TransformableGrid gridTest = new TransformableGrid(30);
+    TransformableGrid mainGrid = new TransformableGrid(30);
 
     public GUI(int scale) {
         setBackground(Color.BLACK);
@@ -37,9 +41,8 @@ public class GUI extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         //TODO add everything that should be drawn
-        gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
+        mainGrid.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
 
-        //TODO: Maybe add switch case for different modes
         if (vectorManager.getDrawingMode() == DrawingMode.NORMAL) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
         }
@@ -60,7 +63,7 @@ public class GUI extends JPanel {
         }
 
         JFrame frame = new JFrame("Linear Algebra Visualizer");
-        GUI testGui = new GUI(50);
+        GUI mainGui = new GUI(50);
 
         JTextField vectorXField = new JTextField(3);
         JTextField vectorYField = new JTextField(3);
@@ -195,17 +198,16 @@ public class GUI extends JPanel {
 
 
 
-        //TODO: Add all GUI components with an action to class GUIComponents and here
+        //TODO: Add all interactive GUI components to class GUIComponents and here
         GUIComponents components = new GUIComponents(
                 addVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton,
                 transformationFieldA, transformationFieldB, transformationFieldC, transformationFieldD, setTransformationButton, hideDetBox,
                 basisFieldA, basisFieldB, basisFieldC, basisFieldD, setBasisButton, hideBasisVecBox, showEigenVectorsBox
-
         );
 
-        new GUIController(testGui,components);
+        new GUIController(mainGui,components);
         frame.setLayout(new BorderLayout());
-        frame.add(testGui, BorderLayout.CENTER);
+        frame.add(mainGui, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(inputPanel2, BorderLayout.SOUTH);
         frame.add(matrixPanel, BorderLayout.EAST);

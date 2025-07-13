@@ -1,5 +1,9 @@
 import java.awt.*;
 
+/**
+ * {@code TransformableGrid} is a drawable-grid that can be transformed by a matrix by implementing {@code Transformable}.
+ */
+
 public class TransformableGrid extends CoordinateGrid implements Transformable{
     private final int MAX_GRID_LINES;
     private final Color NICE_BLUE = new Color(156,156,255);

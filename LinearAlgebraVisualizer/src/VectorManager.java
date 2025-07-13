@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * {@code VectorManager} stores all input vectors and can draw them on the grid in different {@code DrawingMode}'.
+ */
+
 public class VectorManager implements Transformable {
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<>();
     private final Color STANDARD_COLOR = Color.white;

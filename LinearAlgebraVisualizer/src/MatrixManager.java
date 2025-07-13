@@ -1,6 +1,10 @@
 import java.awt.*;
 
-public class MatrixManager implements Transformable{
+/**
+ * {@code MatrixManager} manages input matrices and provides {@code draw} method for determinant and eigenvectors.
+ */
+
+public class MatrixManager implements Transformable {
     private Matrix2D spaceBasis = Matrix2D.identity();
     private Matrix2D interpolated = spaceBasis;
     private Matrix2D target = spaceBasis;
@@ -85,7 +89,6 @@ public class MatrixManager implements Transformable{
         Vector2D i = interpolated.transformVector(new Vector2D(1,0));
         Vector2D j = interpolated.transformVector(new Vector2D(0,1));
 
-
         TransformableVector iDraw = new TransformableVector(1,0, detBlue,"");
         TransformableVector jDraw = new TransformableVector(0,1, detBlue,"");
 
@@ -109,7 +112,6 @@ public class MatrixManager implements Transformable{
         parallelogram.addPoint(I_nextStartingX, I_nextStartingY);
         parallelogram.addPoint(endPointX,endPointY);
         parallelogram.addPoint(J_nextStartingX,J_nextStartingY);
-
 
         g.setColor(determinantFillColor);
         g.fill(parallelogram);

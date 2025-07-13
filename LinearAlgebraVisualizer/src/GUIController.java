@@ -1,5 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+/**
+ * {@code GUIController} handles interactions and logic of {@code GUI}.
+ */
 
 public class GUIController {
     private final GUI gui;
@@ -15,8 +21,11 @@ public class GUIController {
         initializeListeners();
     }
 
-
     public void initializeListeners() {
+        JPopupMenu menu = new JPopupMenu();
+        JMenuItem resetScaleItem = new JMenuItem("Reset scale");
+        menu.add(resetScaleItem);
+
         //TODO: add all listeners
 
         components.addVectorButton().addActionListener(_ -> {
@@ -153,6 +162,27 @@ public class GUIController {
             boolean isShowEigenvectors = components.showEigenvectorsBox().isSelected();
             matrixManager.setShowEigenvectors(isShowEigenvectors);
             gui.repaint();
+        });
+
+        resetScaleItem.addActionListener(_ -> {
+            gui.setScale(50);
+            gui.repaint();
+        });
+
+        gui.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
         });
 
 

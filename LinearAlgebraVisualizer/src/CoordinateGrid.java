@@ -1,5 +1,8 @@
 import java.awt.*;
 
+/**
+ * {@code CoordinateGrid} draws a static 2d coordinate-grid with {@code java.awt}
+ */
 public class CoordinateGrid implements Drawable {
 
     public CoordinateGrid() {

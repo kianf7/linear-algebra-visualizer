@@ -1,5 +1,9 @@
 import java.awt.*;
 
+/**
+ * {@code TransformableVector} is a drawable-vector that can be transformed by a matrix by implementing {@code Transformable}.
+ */
+
 public class TransformableVector extends DrawableVector implements Transformable {
 
     public TransformableVector(double x, double y, Color color, String name) {
