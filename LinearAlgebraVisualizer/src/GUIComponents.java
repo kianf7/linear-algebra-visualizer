@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public record GUIComponents (
         //TODO: Add all GUI components with an action
-        JButton showVectorButton,
+        JButton addVectorButton,
         JTextField vectorXField,
         JTextField vectorYField,
         JButton vectorColorButton,
@@ -21,5 +21,6 @@ public record GUIComponents (
         JTextField basisFieldC,
         JTextField basisFieldD,
         JButton setBasisButton,
-        JCheckBox hideBasisVecBox
+        JCheckBox hideBasisVecBox,
+        JCheckBox showEigenvectorsBox
 ) {}

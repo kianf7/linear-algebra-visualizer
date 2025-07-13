@@ -34,8 +34,16 @@ public class TransformableVector extends DrawableVector implements Transformable
         int transformedEndX = calculateEndX(originX, transformedVector.getX(), scale);
         int transformedEndY = calculateEndY(originY, transformedVector.getY(), scale);
 
+        if (transformedEndX == originX && transformedEndY == originY) {
+            g.fillOval(originX - 4, originY - 4, 8, 8);
+            g.setFont(new Font("Arial", Font.PLAIN, 14));
+            g.setColor(getColor());
+            g.drawString(getName(), originX + 5, originY - 5);
+            return;
+        }
 
-        drawLine(g, originX, originY, transformedEndX,transformedEndY, getColor());
+
+        drawLine(g, originX, originY, transformedEndX,transformedEndY, getColor(), getDrawingThickness());
         drawArrowhead(g, originX, originY, transformedEndX, transformedEndY, getColor());
 
         g.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -69,7 +77,7 @@ public class TransformableVector extends DrawableVector implements Transformable
         int transformedEndX = (int) (newOriginX + transformedVector.getX() * scale);
         int transformedEndY = (int) (newOriginY - transformedVector.getY() * scale);
 
-        drawLine(g, newOriginX, newOriginY, transformedEndX,transformedEndY, getColor());
+        drawLine(g, newOriginX, newOriginY, transformedEndX,transformedEndY, getColor(), getDrawingThickness());
         if (hasHead) {
             drawArrowhead(g, newOriginX, newOriginY, transformedEndX, transformedEndY, getColor());
         }

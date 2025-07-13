@@ -14,4 +14,20 @@ public class Vector2D {
         return getX() == 0 && getY() == 0;
     }
 
+    public double getLength() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public Vector2D normalize() {
+        double length = getLength();
+        if (length == 0) {
+            return new Vector2D(0,0);
+        }
+        return new Vector2D(x / length, y / length);
+    }
+
+    public Vector2D negate() {
+        return new Vector2D(-x,-y);
+    }
+
 }

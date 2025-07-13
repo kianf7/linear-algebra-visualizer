@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-//TODO: Maybe make generic <T extends DrawableVector>
 public class VectorManager implements Transformable {
     private final ArrayList<DrawableVector> inputVectors = new ArrayList<>();
     private final Color STANDARD_COLOR = Color.white;

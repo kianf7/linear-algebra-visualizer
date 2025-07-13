@@ -8,6 +8,10 @@ public class TransformableGrid extends CoordinateGrid implements Transformable{
         this.MAX_GRID_LINES = MAX_GRID_LINES;
     }
 
+    public int getMAX_GRID_LINES() {
+        return MAX_GRID_LINES;
+    }
+
     @Override
     public void draw(Graphics2D g, int windowWidth, int windowHeight, int scale, Matrix2D transformation) {
         int originX = windowWidth / 2;

@@ -33,6 +33,10 @@ public class Matrix2D {
         return new Matrix2D(1, 0, 0, 1);
     }
 
+    public static Matrix2D zero() {
+        return new Matrix2D(0,0,0,0);
+    }
+
     //Works somehow
     public static Matrix2D interpolate(Matrix2D m1, Matrix2D m2, double t) {
         double a = m1.getA() * m2.getA() + m1.getB() * m2.getC();
@@ -48,11 +52,64 @@ public class Matrix2D {
         return new Matrix2D(interpolatedA, interpolatedB, interpolatedC, interpolatedD);
     }
 
-    public double determinant() {
-        return a * d - b * c;
-    }
-
     public boolean isZero() {
         return a == 0 && b == 0 && c == 0 && d == 0;
     }
+
+    public boolean isEqual(Matrix2D other) {
+        return a == other.a && b == other.b && c == other.c && d == other.d;
+    }
+
+    public double getDeterminant() {
+        return a * d - b * c;
+    }
+
+    public Matrix2D getInverse() {
+        double det = getDeterminant();
+        if (det == 0 ) {
+            return null;
+        }
+
+        double invA = d / det;
+        double invB = -b / det;
+        double invC = -c / det;
+        double invD = a / det;
+
+        return new Matrix2D(invA,invB,invC,invD);
+    }
+
+    //For 2x2 matrices you get the polynomial t^2 - (a + d)t + (ad - bc)
+    public double[] getEigenvalues() {
+        double bCoefficient = a + d;
+        double cCoefficient = getDeterminant();
+
+        if (bCoefficient * bCoefficient - 4 * cCoefficient < 0) {
+            return null;
+        }
+
+        double sqrt = Math.sqrt(bCoefficient * bCoefficient - 4 * cCoefficient);
+
+        double lambda1 = 0.5 * (bCoefficient + sqrt);
+        double lambda2 = 0.5 * (bCoefficient - sqrt);
+
+        return new double[] {lambda1, lambda2};
+    }
+
+    public Vector2D getEigenvector(double lambda) {
+        // (A - lambda * I) * v = 0
+        double m00 = a - lambda;
+        double m01 = b;
+        double m10 = c;
+        double m11 = d - lambda;
+
+        if (Math.abs(m00) > 1e-10 || Math.abs(m01) > 1e-10) {
+            return new Vector2D(-m01, m00).normalize();
+        } else if (Math.abs(m10) > 1e-10 || Math.abs(m11) > 1e-10) {
+            return new Vector2D(-m11, m10).normalize();
+        } else {
+            return new Vector2D(1, 0);
+        }
+    }
+
+
 }

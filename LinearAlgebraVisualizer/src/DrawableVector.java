@@ -4,6 +4,7 @@ import java.awt.geom.AffineTransform;
 public class DrawableVector extends Vector2D implements Drawable {
     private Color color;
     private String name;
+    private Stroke drawingThickness = new BasicStroke(2.5F);
 
     public DrawableVector(double x, double y, Color color, String name) {
         super(x,y);
@@ -25,6 +26,14 @@ public class DrawableVector extends Vector2D implements Drawable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDrawingThickness(Stroke drawingThickness) {
+        this.drawingThickness = drawingThickness;
+    }
+
+    public Stroke getDrawingThickness() {
+        return drawingThickness;
     }
 
     protected Stroke prepare(Graphics2D g, int originX, int originY) {
@@ -50,7 +59,7 @@ public class DrawableVector extends Vector2D implements Drawable {
         int endX = calculateEndX(originX, scale);
         int endY = calculateEndY(originY, scale);
 
-        drawLine(g, originX, originY, endX, endY, color);
+        drawLine(g, originX, originY, endX, endY, color, drawingThickness);
         drawArrowhead(g, originX, originY, endX, endY, color);
 
         g.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -60,24 +69,9 @@ public class DrawableVector extends Vector2D implements Drawable {
         g.setStroke(oldStroke);
     }
 
-    public void drawUnlockedFromOrigin(Graphics2D g, int newOriginX, int newOriginY, int scale) {
-        Stroke oldStroke = g.getStroke();
-        int endX = calculateEndX(newOriginX, scale);
-        int endY = calculateEndY(newOriginY, scale);
-
-        drawLine(g, newOriginX, newOriginY, endX,endY, color);
-        drawArrowhead(g, newOriginX, newOriginY, endX, endY, color);
-
-        g.setFont(new Font("Arial", Font.PLAIN, 14));
-        g.setColor(Color.white);
-        g.drawString(name, endX - 10, endY + 5);
-
-        g.setStroke(oldStroke);
-    }
-
-    protected static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {
+    protected static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, Color color, Stroke drawingThickness) {
         g.setColor(color);
-        g.setStroke(new BasicStroke(2.5F));
+        g.setStroke(drawingThickness);
         g.drawLine(x1, y1, x2, y2);
     }
     protected static void drawArrowhead(Graphics2D g, int x1, int y1, int x2, int y2, Color color) {

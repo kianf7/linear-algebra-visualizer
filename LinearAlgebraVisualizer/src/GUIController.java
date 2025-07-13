@@ -19,7 +19,7 @@ public class GUIController {
     public void initializeListeners() {
         //TODO: add all listeners
 
-        components.showVectorButton().addActionListener(_ -> {
+        components.addVectorButton().addActionListener(_ -> {
             try {
                 if (vectorManager.getDrawingMode() != DrawingMode.NORMAL) {
                     vectorManager.setDrawingMode(DrawingMode.NORMAL);
@@ -70,13 +70,22 @@ public class GUIController {
 
         components.sumVectorsButton().addActionListener(_ -> {
             if (vectorManager.getDrawingMode() != DrawingMode.SUM) {
+                if (vectorManager.getVectorAmount() == 0) {
+                    JOptionPane.showMessageDialog(gui, "Input vectors first!");
+                    return;
+                }
                 vectorManager.setDrawingMode(DrawingMode.SUM);
                 gui.repaint();
             }
         });
 
         gui.addMouseWheelListener(e -> {
+            final int MAX_SCALE = 30000000;
             if (e.getWheelRotation() < 0) {
+                if (gui.getScale() > MAX_SCALE) {
+                    return;
+                }
+
                 int newScale = (int) (gui.getScale() * 1.1);
                 gui.setScale(newScale);
                 gui.repaint();
@@ -106,8 +115,8 @@ public class GUIController {
         });
 
         components.hideDetBox().addActionListener(_ -> {
-            boolean hideDet = components.hideDetBox().isSelected();
-            matrixManager.setHideDet(hideDet);
+            boolean isHideDet = components.hideDetBox().isSelected();
+            matrixManager.setHideDet(isHideDet);
             gui.repaint();
         });
 
@@ -120,7 +129,7 @@ public class GUIController {
 
                 Matrix2D newBasis = new Matrix2D(inputA, inputB, inputC, inputD);
 
-                if (newBasis.determinant() == 0) {
+                if (newBasis.getDeterminant() == 0) {
                     JOptionPane.showMessageDialog(gui,"Basis must have Dimension 2 !");
                 } else {
                     matrixManager.setSpaceBasis(newBasis);
@@ -135,8 +144,14 @@ public class GUIController {
         });
 
         components.hideBasisVecBox().addActionListener(_ -> {
-            boolean hideBasis = components.hideBasisVecBox().isSelected();
-            matrixManager.setHideBasisVectors(hideBasis);
+            boolean isHideBasis = components.hideBasisVecBox().isSelected();
+            matrixManager.setHideBasisVectors(isHideBasis);
+            gui.repaint();
+        });
+
+        components.showEigenvectorsBox().addActionListener(_ -> {
+            boolean isShowEigenvectors = components.showEigenvectorsBox().isSelected();
+            matrixManager.setShowEigenvectors(isShowEigenvectors);
             gui.repaint();
         });
 

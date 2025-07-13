@@ -39,14 +39,6 @@ public class GUI extends JPanel {
         //TODO add everything that should be drawn
         gridTest.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
 
-        if (!matrixManager.getHideDet()) {
-            matrixManager.drawDeterminant(g2d,getWidth(),getHeight(),scale);
-        }
-
-        if (!matrixManager.getHideBasisVectors()) {
-            matrixManager.drawBasisVectors(g2d,getWidth(),getHeight(),scale);
-        }
-
         //TODO: Maybe add switch case for different modes
         if (vectorManager.getDrawingMode() == DrawingMode.NORMAL) {
             vectorManager.draw(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
@@ -55,7 +47,7 @@ public class GUI extends JPanel {
             vectorManager.drawSum(g2d, getWidth(), getHeight(), scale, matrixManager.getInterpolated());
         }
 
-
+        matrixManager.draw(g2d,getWidth(),getHeight(),scale, matrixManager.getInterpolated());
 
     }
 
@@ -72,18 +64,23 @@ public class GUI extends JPanel {
 
         JTextField vectorXField = new JTextField(3);
         JTextField vectorYField = new JTextField(3);
-        JButton showVectorButton = new JButton("Add vector");
+        JButton addVectorButton = new JButton("Add vector");
         JButton vectorColorButton = new JButton("Choose color");
         JLabel labelX = new JLabel("x:");
         JLabel labelY = new JLabel("y:");
-        JLabel colorLabel = new JLabel("Current Color:");
+        JLabel colorLabel = new JLabel("Current vector color:");
         JPanel colorPreview = new JPanel();
         colorPreview.setPreferredSize(new Dimension(20, 20));
         colorPreview.setBackground(Color.WHITE);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        JButton removeLastVectorButton = new JButton("Remove last vector");
+        JButton removeLastVectorButton = new JButton("Remove last");
         JButton sumVectorsButton = new JButton("Sum Vectors");
-        sumVectorsButton.setToolTipText("Sums up all the vectors");
+        sumVectorsButton.setToolTipText("Sums up all the vectors on the grid");
+        addVectorButton.setToolTipText("Adds input vector to the grid");
+        vectorXField.setToolTipText("Input x-Coordinate of new vector here");
+        vectorYField.setToolTipText("Input y-Coordinate of new vector here");
+        removeLastVectorButton.setToolTipText("Removes last input vector from grid");
+        vectorColorButton.setToolTipText("Choose color for following vectors");
 
 
         JPanel inputPanel = new JPanel();
@@ -91,7 +88,7 @@ public class GUI extends JPanel {
         inputPanel.add(vectorXField);
         inputPanel.add(labelY);
         inputPanel.add(vectorYField);
-        inputPanel.add(showVectorButton);
+        inputPanel.add(addVectorButton);
         inputPanel.add(sumVectorsButton);
         inputPanel.add(removeLastVectorButton);
         inputPanel.add(vectorColorButton);
@@ -123,6 +120,7 @@ public class GUI extends JPanel {
         transformationInputGrid.add(transformationFieldB);
         transformationInputGrid.add(transformationFieldC);
         transformationInputGrid.add(transformationFieldD);
+        transformationInputGrid.setToolTipText("Input a matrix to transform the grid");
 
         JButton setTransformationButton = new JButton("Set Transformation");
         //x////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +142,7 @@ public class GUI extends JPanel {
         basisGrid.add(basisFieldB);
         basisGrid.add(basisFieldC);
         basisGrid.add(basisFieldD);
+        basisGrid.setToolTipText("Input a matrix as a basis for the grid");
 
         JButton setBasisButton = new JButton("Set Basis");
 
@@ -156,6 +155,13 @@ public class GUI extends JPanel {
         hideDeterminant.add(hideDetLabel);
         hideDeterminant.add(hideDetBox);
 
+        JCheckBox showEigenVectorsBox = new JCheckBox();
+        JLabel showEigenVectorsLabel = new JLabel("Show Eigenvectors:");
+        JPanel showEigenvectors = new JPanel();
+        showEigenvectors.setMaximumSize((new Dimension(200,30)));
+        showEigenvectors.add(showEigenVectorsLabel);
+        showEigenvectors.add(showEigenVectorsBox);
+
         JCheckBox hideBasisVecBox = new JCheckBox();
         JLabel hideBasisVecLabel = new JLabel("Hide Basis-Vectors:");
         JPanel hideBasisVec = new JPanel();
@@ -166,6 +172,7 @@ public class GUI extends JPanel {
         transformationInputGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
         setTransformationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         hideDeterminant.setAlignmentX(Component.CENTER_ALIGNMENT);
+        showEigenvectors.setAlignmentX(Component.CENTER_ALIGNMENT);
         basisGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
         setBasisButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         hideBasisVec.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -179,6 +186,8 @@ public class GUI extends JPanel {
         matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
         matrixPanel.add(hideDeterminant);
         matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        matrixPanel.add(showEigenvectors);
+        matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
         matrixPanel.add(basisGrid);
         matrixPanel.add(Box.createRigidArea(new Dimension(0,10)));
         matrixPanel.add(setBasisButton);
@@ -188,9 +197,9 @@ public class GUI extends JPanel {
 
         //TODO: Add all GUI components with an action to class GUIComponents and here
         GUIComponents components = new GUIComponents(
-                showVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton,
+                addVectorButton, vectorXField, vectorYField, vectorColorButton, colorPreview, removeLastVectorButton, transformationSlider, sumVectorsButton,
                 transformationFieldA, transformationFieldB, transformationFieldC, transformationFieldD, setTransformationButton, hideDetBox,
-                basisFieldA, basisFieldB, basisFieldC, basisFieldD, setBasisButton, hideBasisVecBox
+                basisFieldA, basisFieldB, basisFieldC, basisFieldD, setBasisButton, hideBasisVecBox, showEigenVectorsBox
 
         );
 
